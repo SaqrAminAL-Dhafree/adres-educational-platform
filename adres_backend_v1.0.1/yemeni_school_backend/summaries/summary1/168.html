@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة ٦٤ - المعلم المثالي</title>
+    <style>
+        body { font-family: 'Times New Roman', Times, serif; background-color: #f5f5f5; margin: 0; padding: 10px; color: #000; line-height: 1.4; }
+        .page-container { max-width: 900px; margin: auto; background: #fff; border: 2px solid #000; padding: 20px; position: relative; }
+        .header-num { text-align: center; font-weight: bold; border-bottom: 2px solid #000; margin-bottom: 10px; padding-bottom: 5px; }
+        .unit-box { border: 2px solid #000; width: fit-content; margin: 10px auto; padding: 5px 40px; font-size: 1.3em; font-weight: bold; }
+        .subject-title { text-align: center; font-size: 1.2em; font-weight: bold; text-decoration: underline; margin-bottom: 15px; }
+        .main-content { display: flex; gap: 20px; }
+        .column { flex: 1; }
+        .right-col { border-left: 1px solid #000; padding-left: 15px; }
+        .section-title { font-weight: bold; text-decoration: underline; margin-top: 10px; }
+        .math-box { border: 1px solid #000; padding: 10px; margin: 10px 0; background-color: #fcfcfc; }
+        .note-box { border: 1px dashed #000; padding: 8px; margin: 10px 0; font-size: 0.95em; }
+        .svg-container { text-align: center; margin: 15px 0; }
+        .fraction { display: inline-block; vertical-align: middle; text-align: center; margin: 0 5px; }
+        .fraction span { display: block; padding: 0 2px; }
+        .top { border-bottom: 1px solid #000; }
+        
+        @media (max-width: 768px) {
+            .main-content { flex-direction: column; }
+            .right-col { border-left: none; border-bottom: 1px solid #000; padding-bottom: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-container">
+    <div class="header-num">ـ ٦٤ ـ</div>
+    
+    <div class="unit-box">الوحدة الرابعة</div>
+    <div class="subject-title">حساب المثلثات</div>
+
+    <div class="main-content">
+        <div class="column right-col">
+            <div class="section-title">العلاقة العددية في مثلث قائم الزاوية :</div>
+            <p>الشرط الأساسي لرسم أي مثلث مهما كان نوعه يعطى بالمتباينة المثلثية التالية :</p>
+            <div class="math-box" style="text-align: center;">
+                (( مجموع طولي أي ضلعين في مثلث أكبر من طول ضلعه الثالث ))
+            </div>
+            
+            <p><b>مثال :</b> حدد أي من الثلاثيات التالية يمكن أن تشكل أطوال مثلث :-<br>
+            أ) ١٢ سم ، ٦ سم ، ١٩ سم . (ب) ٣ ، ٥ سم ، ٤ ، ٧ سم ، ٩ سم .</p>
+            <p><b>* الحل *</b><br>
+            أ) ١٢ + ٦ = ١٨ < ١٩ فإن هذه الأطوال لا تشكل أطوال أضلاع مثلث .<br>
+            ب) ٣ ، ٥ + ٤ ، ٧ = ٨ ، ٢ < ٩ ، ٩ < ٤ ، ٧ + ٣ ، ٥ ، ٣ ، ٥ < ٩ + ٤ ، ٧<br>
+            فهذه الأطوال تشكل أطوال أضلاع مثلث .</p>
+
+            <div class="math-box">
+                <b>تذكر :</b><br>
+                أ) حالات تشابه مثلثين :<br>
+                ١) إذا تناسبت أضلاعهما المتناظرة .<br>
+                ٢) إذا تطابقت زاويتان من أحدهما مع زاويتين من الآخر .<br>
+                ٣) إذا تطابقت زاوية من أحدهما مع زاوية من الآخر وتناسب ضلعا الزاوية الأولى مع ضلعي الزاوية الأخرى .
+            </div>
+
+            <p>ب) من الشكلين (أ) ، (ب) مثلثين الأول قائم الزاوية والثاني حاد الزاوية ومنهما تعلم أن :-</p>
+            
+            <div class="svg-container">
+                <svg width="150" height="120" style="display:inline-block">
+                    <path d="M 20,20 L 20,100 L 100,100 Z" fill="none" stroke="black" stroke-width="1.5"/>
+                    <rect x="20" y="90" width="10" height="10" fill="none" stroke="black"/>
+                    <line x1="20" y1="100" x2="60" y2="100" stroke="black" stroke-width="3"/>
+                    <text x="5" y="60">س</text> <text x="55" y="115">ص</text> <text x="105" y="105">ع</text>
+                    <text x="50" y="130">شكل (أ)</text>
+                </svg>
+                <svg width="150" height="120" style="display:inline-block">
+                    <path d="M 75,20 L 20,100 L 130,100 Z" fill="none" stroke="black" stroke-width="1.5"/>
+                    <line x1="75" y1="20" x2="75" y2="100" stroke="black" stroke-width="1"/>
+                    <line x1="70" y1="100" x2="80" y2="100" stroke="black" stroke-width="3"/>
+                    <text x="70" y="15">أ</text> <text x="10" y="115">ب</text> <text x="135" y="115">جـ</text>
+                    <text x="50" y="130">شكل (ب)</text>
+                </svg>
+            </div>
+
+            <p>١) القطع المستقيمة س ع ، أ د تسمى ارتفاعات المثلث حيث كل قطعة مستقيمة تنزل عمودية من رأس زاوية المثلث على الضلع المقابل (القاعدة) .<br>
+            ٢) القطع المستقيمة ص ص ، أ ب جـ تسمى أوتار حيث كل وتر يقابل الزاوية القائمة من المثلث .<br>
+            ٣) القطع المستقيمة ل ، ك تسمى متوسطات المثلث حيث كل متوسط هو قطعة مستقيمة واصلة من رأس زاوية المثلث إلى منتصف الضلع المقابل لزاوية الرأس .</p>
+        </div>
+
+        <div class="column">
+            <div class="note-box">
+                <b>ملاحظة هامة :</b><br>
+                يقال عن ∆∆ أ ب جـ ، د هـ و أنهما متشابهان إذا كان :-<br>
+                أ) ق(∠أ) = ق(∠د) ، ق(∠ب) = ق(∠هـ) ، ق(∠جـ) = ق(∠و)<br>
+                ب) <div class="fraction"><span class="top">|أ ب|</span><span class="bottom">|د هـ|</span></div> = <div class="fraction"><span class="top">|ب جـ|</span><span class="bottom">|هـ و|</span></div> = <div class="fraction"><span class="top">|أ جـ|</span><span class="bottom">|د و|</span></div> (مراعاة الترتيب مهم)<br>
+                والعكس صحيح أي : إذا كان المثلثان متشابهان فإن قياس زواياهما المتناظرة متساوية وأطوال أضلاعهما المتناظرة متناسبة .
+            </div>
+
+            <div class="subject-title">العلاقات العددية في مثلث قائم الزاوية</div>
+            <div class="math-box">
+                <b>مبرهنة (١) :</b> مربع ضلع قائم في مثلث يساوي حاصل ضرب الوتر في مسقط هذا الضلع على الوتر .
+            </div>
+
+            <p><b>المعطيات :</b> أ ب جـ قائم الزاوية في أ ، أ د ⊥ ب جـ<br>
+            ب د مسقط أ ب على ب جـ ، جـ د مسقط أ جـ على ب جـ .<br>
+            <b>المطلوب :</b> إثبات أن :<br>
+            ١) |أ ب|<sup>٢</sup> = |ب جـ| × |ب د|<br>
+            ٢) |أ جـ|<sup>٢</sup> = |ب جـ| × |جـ د|</p>
+
+            <div class="svg-container">
+                <svg width="200" height="120">
+                    <path d="M 100,20 L 20,100 L 180,100 Z" fill="none" stroke="black" stroke-width="1.5"/>
+                    <line x1="100" y1="20" x2="100" y2="100" stroke="black" stroke-width="1.2"/>
+                    <rect x="92" y="12" width="16" height="16" fill="none" stroke="black" transform="rotate(45 100 20)"/>
+                    <rect x="100" y="90" width="10" height="10" fill="none" stroke="black"/>
+                    <text x="95" y="15">أ</text> <text x="10" y="115">ب</text> <text x="185" y="115">جـ</text> <text x="95" y="115">د</text>
+                    <text x="100" y="135">شكل (١)</text>
+                </svg>
+            </div>
+
+            <p><b>البرهان :</b> برسم الشكل (١) نجد :<br>
+            ١) ∆ ب أ د ، ∆ ب جـ أ فيهما :<br>
+            ق(∠أ د ب) = ق(∠ب أ جـ) بالقائم<br>
+            (∠ب) مشتركة .<br>
+            ∴ ∆ ب أ د يشابه ∆ ب جـ أ ، وينتج من التشابه أن :-<br>
+            <div class="fraction"><span class="top">|أ ب|</span><span class="bottom">|ب جـ|</span></div> = <div class="fraction"><span class="top">|ب د|</span><span class="bottom">|أ ب|</span></div> ومنها |أ ب|<sup>٢</sup> = |ب جـ| × |ب د| #أولاً<br>
+            ٢) ∆ جـ أ د ، جـ ب أ فيهما :<br>
+            ق(∠أ د جـ) = ق(∠ب أ جـ) بالقائم<br>
+            (∠جـ) مشتركة .<br>
+            ∴ ∆ جـ أ د ، جـ ب أ متشابهان ، وينتج من هذا التشابه أن :-<br>
+            <div class="fraction"><span class="top">|أ جـ|</span><span class="bottom">|ب جـ|</span></div> = <div class="fraction"><span class="top">|جـ د|</span><span class="bottom">|أ جـ|</span></div> ومنها |أ جـ|<sup>٢</sup> = |ب جـ| × |جـ د| #ثانياً</p>
+
+            <p><b>مثال :</b> أ ب جـ قائم الزاوية في أ فيه |أ ب| = ٢٠ سم<br>
+            ، |ب جـ| = ٢٥ سم ، أ د ⊥ ب جـ<br>
+            أوجد : |ب د| ، |جـ د| ، |أ جـ| .</p>
+
+            <div class="svg-container">
+                <svg width="200" height="120">
+                    <path d="M 80,20 L 20,100 L 180,100 Z" fill="none" stroke="black" stroke-width="1.5"/>
+                    <line x1="80" y1="20" x2="80" y2="100" stroke="black" stroke-width="1"/>
+                    <text x="75" y="15">أ</text> <text x="10" y="115">ب</text> <text x="185" y="115">جـ</text> <text x="75" y="115">د</text>
+                    <text x="30" y="60">٢٠ سم</text>
+                    <path d="M 20,110 L 180,110" stroke="black" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+                    <text x="90" y="125">٢٥ سم</text>
+                </svg>
+            </div>
+
+            <p><b>* الحل *</b><br>
+            ∵ ∆ أ ب جـ قائم في أ ، أ د ⊥ ب جـ<br>
+            ∴ |أ ب|<sup>٢</sup> = |ب جـ| × |ب د| مبرهنة (١)<br>
+            نعوض فنجد :<br>
+            (٢٠)<sup>٢</sup> = ٢٥ × |ب د| ومنه |ب د| = <div class="fraction"><span class="top">٤٠٠</span><span class="bottom">٢٥</span></div> = ١٦ سم #أولاً.<br>
+            ∵ |ب جـ| = |ب د| + |د جـ|<br>
+            ∴ ٢٥ = ١٦ + |د جـ| ⇒ |د جـ| = ٢٥ - ١٦ = ٩ سم<br>
+            ومنه |د جـ| = ٩ سم<br>
+            |أ جـ|<sup>٢</sup> = |ب جـ| × |د جـ| مبرهنة (١)<br>
+            ∴ |أ جـ|<sup>٢</sup> = ٢٥ × ٩ = ٢٢٥<br>
+            ومنه |أ جـ| = √٢٢٥ = ١٥ سم #</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

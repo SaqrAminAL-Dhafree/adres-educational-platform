@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import '../../core/services/student_local_service.dart';
 import '../../core/services/progress_local_service.dart';
 import '../../core/services/reading_state_local_service.dart';
 import '../../core/services/sync_local_service.dart';
+import '../../core/services/api_service.dart';
 import '../../core/account_type_screen.dart';
-import '../../core/server_settings_screen.dart';
+import '../../main.dart';
+import 'grade_select_screen.dart';
 import 'subject_screen.dart';
 import 'book_screen.dart';
 
@@ -38,6 +41,12 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
   }
 
   Future<void> _trySync() async {
+    // إجبار إعادة المزامنة مرة واحدة بعد تحديث معادلة التقدم (v1.0.2)
+    final box = Hive.box('studentBox');
+    if (box.get('progress_formula_v102') != true) {
+      SyncLocalService.markAllAsUnsynced();
+      box.put('progress_formula_v102', true);
+    }
     if (SyncLocalService.hasPendingSync()) {
       setState(() => _syncing = true);
       await SyncLocalService.syncProgressToServer();
@@ -109,6 +118,96 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
     );
   }
 
+  void _showChangePassword() {
+    final oldPass = TextEditingController();
+    final newPass = TextEditingController();
+    final confirmPass = TextEditingController();
+    bool obscure = true;
+    String? error;
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setS) => Padding(
+          padding: EdgeInsets.only(
+              left: 20, right: 20, top: 20,
+              bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('تغيير كلمة المرور',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 16),
+              _passField(oldPass, 'كلمة المرور الحالية', obscure,
+                  () => setS(() => obscure = !obscure)),
+              const SizedBox(height: 10),
+              _passField(newPass, 'كلمة المرور الجديدة', obscure,
+                  () => setS(() => obscure = !obscure)),
+              const SizedBox(height: 10),
+              _passField(confirmPass, 'تأكيد كلمة المرور الجديدة', obscure,
+                  () => setS(() => obscure = !obscure)),
+              if (error != null) ...[
+                const SizedBox(height: 8),
+                Text(error!, style: const TextStyle(color: Colors.red)),
+              ],
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    final student = StudentLocalService.getStudent();
+                    // التحقق من كلمة المرور الحالية عبر الـ API
+                    final data = await ApiService.loginStudent(student['academicId']);
+                    final currentPass = (data?['password'] ?? '').toString();
+                    if (oldPass.text.trim() != currentPass) {
+                      setS(() => error = 'كلمة المرور الحالية غير صحيحة');
+                      return;
+                    }
+                    if (newPass.text.trim().isEmpty) {
+                      setS(() => error = 'أدخل كلمة المرور الجديدة');
+                      return;
+                    }
+                    if (newPass.text.trim() != confirmPass.text.trim()) {
+                      setS(() => error = 'كلمتا المرور غير متطابقتين');
+                      return;
+                    }
+                    final ok = await ApiService.setStudentPassword(
+                        student['academicId'], newPass.text.trim());
+                    if (!mounted) return;
+                    Navigator.pop(ctx);
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(ok ? 'تم تغيير كلمة المرور بنجاح ✅' : 'فشل التغيير، حاول مجدداً'),
+                      backgroundColor: ok ? Colors.green : Colors.red,
+                    ));
+                  },
+                  child: const Text('حفظ'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _passField(TextEditingController c, String label, bool obscure, VoidCallback toggle) =>
+      TextField(
+        controller: c,
+        obscureText: obscure,
+        decoration: InputDecoration(
+          labelText: label,
+          border: const OutlineInputBorder(),
+          suffixIcon: IconButton(
+            icon: Icon(obscure ? Icons.visibility_off : Icons.visibility),
+            onPressed: toggle,
+          ),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     final progress = _getOverallProgress();
@@ -118,6 +217,12 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
       appBar: AppBar(
         title: Text('مرحبًا ${_student['fullName']} 👋'),
         automaticallyImplyLeading: false,
+        leading: Builder(
+          builder: (ctx) => IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => Scaffold.of(ctx).openDrawer(),
+          ),
+        ),
         actions: [
           if (_syncing)
             const Padding(
@@ -132,23 +237,79 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
             tooltip: 'مزامنة',
             onPressed: _trySync,
           ),
-          IconButton(
-            icon: const Icon(Icons.settings),
-            tooltip: 'إعدادات السيرفر',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const ServerSettingsScreen(),
-                ),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: _logout,
-          ),
         ],
+      ),
+      drawer: Drawer(
+        child: SafeArea(
+          child: Column(
+            children: [
+              DrawerHeader(
+                decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary),
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const CircleAvatar(
+                          radius: 30,
+                          child: Icon(Icons.school, size: 30)),
+                      const SizedBox(height: 8),
+                      Text(_student['fullName'] ?? 'طالب',
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold)),
+                      Text(_student['academicId'] ?? '',
+                          style: const TextStyle(
+                              color: Colors.white70, fontSize: 12)),
+                    ],
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.lock_outline),
+                title: const Text('تغيير كلمة المرور'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _showChangePassword();
+                },
+              ),
+              ListTile(
+                leading: Icon(themeNotifier.isDark
+                    ? Icons.light_mode_outlined
+                    : Icons.dark_mode_outlined),
+                title: Text(themeNotifier.isDark
+                    ? 'الوضع النهاري'
+                    : 'الوضع الليلي'),
+                onTap: () {
+                  themeNotifier.toggle();
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.grid_view_rounded),
+                title: const Text('الصفوف الدراسية'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (_) => const GradeSelectScreen()),
+                  );
+                },
+              ),
+              const Spacer(),
+              ListTile(
+                leading: const Icon(Icons.logout, color: Colors.red),
+                title: const Text('تسجيل الخروج',
+                    style: TextStyle(color: Colors.red)),
+                onTap: () {
+                  Navigator.pop(context);
+                  _logout();
+                },
+              ),
+            ],
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

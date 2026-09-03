@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة ٦٥ - المعلم المثالي</title>
+    <style>
+        body { font-family: 'Times New Roman', Times, serif; background-color: #fdfdfd; margin: 0; padding: 10px; color: #000; line-height: 1.4; }
+        .page-container { max-width: 900px; margin: auto; background: #fff; border: 2px solid #000; padding: 20px; }
+        .header-page { text-align: center; font-weight: bold; font-size: 1.2em; border-bottom: 2px solid #000; margin-bottom: 15px; }
+        .main-content { display: flex; gap: 20px; }
+        .column { flex: 1; }
+        .right-col { order: 1; border-left: 1px solid #000; padding-left: 15px; }
+        .left-col { order: 2; }
+        .theorem-box { border: 2px solid #000; padding: 10px; margin-bottom: 15px; background: #f9f9f9; }
+        .title-bold { font-weight: bold; text-decoration: underline; }
+        .math-text { margin-bottom: 12px; font-size: 1.05em; }
+        .dashed-separator { border-top: 1px dashed #000; margin: 15px 0; }
+        .svg-container { text-align: center; margin: 10px 0; }
+        
+        @media (max-width: 768px) {
+            .main-content { flex-direction: column; }
+            .right-col { border-left: none; border-bottom: 2px solid #000; padding-bottom: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-container">
+    <div class="header-page">ـ ٦٥ ـ</div>
+
+    <div class="main-content">
+        <div class="column right-col">
+            <div class="theorem-box">
+                <span class="title-bold">مبرهنة (٢) :</span> مربع الارتفاع في مثلث قائم الزاوية يساوي حاصل ضرب جزئي الوتر المحددين بهذا الارتفاع .
+            </div>
+
+            <div class="math-text">
+                <span class="title-bold">المعطيات :</span> أ ب جـ مثلث قائم في أ ، أ د ⊥ ب جـ<br>
+                <span class="title-bold">المطلوب :</span> إثبات أن : |أ د|<sup>٢</sup> = |ب د| × |د جـ|<br>
+                <span class="title-bold">البرهان :</span> ١) ∆∆ ب أ د ، ب جـ أ فيهما :<br>
+                ق(∠أ د ب) = ق(∠ب أ جـ) بالقائم<br>
+                (∠ب) مشتركة .<br>
+                ∴ ∆∆ ب أ د ، ب جـ أ متشابهان<br>
+                وينتج من التشابه أن :<br>
+                ∴ <div style="display:inline-block; vertical-align:middle; text-align:center;"><span>ق(∠١) = ق(∠٤)</span><br><hr style="margin:2px"><span>ق(∠٢) = ق(∠٣)</span></div> ← (١)<br>
+                ٢) ∆ جـ أ د ، جـ ب أ متشابهان "لماذا ؟"<br>
+                ∴ ق(∠١) = ق(∠٣) ← (٢)<br>
+                من ١ ، ٢ نجد فيهما :<br>
+                ق(∠١) = ق(∠٣) ، ق(∠٤) = ق(∠٢)<br>
+                ، ق(∠أ د ب) = ق(∠أ د جـ) (كل منهما زاوية قائمة))<br>
+                ∴ ∆∆ ب أ د ، د جـ أ متشابهان وينتج من التشابه أن :<br>
+                |أ د| / |د جـ| = |ب د| / |أ د| ومنه |أ د|<sup>٢</sup> = |ب د| × |د جـ|<br>
+                وهو المطلوب #
+            </div>
+
+            <div class="svg-container">
+                <svg width="180" height="120" viewBox="0 0 180 120">
+                    <path d="M 90,20 L 20,100 L 160,100 Z" fill="none" stroke="black" stroke-width="1.5"/>
+                    <line x1="90" y1="20" x2="90" y2="100" stroke="black" stroke-width="1.2"/>
+                    <rect x="90" y="90" width="10" height="10" fill="none" stroke="black"/>
+                    <text x="85" y="15">أ</text> <text x="10" y="115">ب</text> <text x="165" y="115">جـ</text> <text x="85" y="115">د</text>
+                    <text x="75" y="45" font-size="10">١</text> <text x="100" y="45" font-size="10">٢</text>
+                    <text x="35" y="95" font-size="10">٤</text> <text x="140" y="95" font-size="10">٣</text>
+                    <text x="70" y="130">شكل (٢-أ)</text>
+                </svg>
+            </div>
+
+            <div class="dashed-separator"></div>
+
+            <div class="theorem-box">
+                <span class="title-bold">مبرهنة (٣) ( مبرهنة فيثاغورت ) :</span> في المثلث القائم الزاوية ، مربع طول الوتر يساوي مجموع مربعي طولي الضلعين الآخرين (القائمين) .
+            </div>
+
+            <div class="math-text">
+                <span class="title-bold">المعطيات :</span> أ ب جـ مثلث قائم في أ ، ب ، جـ ضلعي الزاوية القائمة شكل (١ ب)<br>
+                <span class="title-bold">المطلوب :</span> إثبات أن : |ب جـ|<sup>٢</sup> = |أ ب|<sup>٢</sup> + |أ جـ|<sup>٢</sup><br>
+                <span class="title-bold">الفكرة :</span> نبحث عما يساويه كل من مربعي ضلعي الزاوية القائمة مستفيدين من المبرهنة (١)<br>
+                <span class="title-bold">لذلك نجري العمل التالي :</span><br>
+                <span class="title-bold">العمل :</span> ننشئ أ د ⊥ ب جـ<br>
+                <span class="title-bold">البرهان :</span> ∵ ∆ أ ب جـ قائم في أ<br>
+                ، أ د ⊥ ب جـ (عملاً)<br>
+                |أ ب|<sup>٢</sup> = |ب جـ| × |ب د| ← (١) مبرهنة (١)<br>
+                |أ جـ|<sup>٢</sup> = |ب جـ| × |د جـ| ← (٢) مبرهنة (١)<br>
+                بجمع (١) ، (٢) نجد :<br>
+                |أ ب|<sup>٢</sup> + |أ جـ|<sup>٢</sup> = |ب جـ| × |ب د| + |ب جـ| × |د جـ|<br>
+                نأخذ |ب جـ| عامل مشترك<br>
+                = |ب جـ| (|ب د| + |د جـ|)<br>
+                وحيث |ب جـ| = |ب د| + |د جـ|<br>
+                ∴ |أ ب|<sup>٢</sup> + |أ جـ|<sup>٢</sup> = |ب جـ| × |ب جـ| = |ب جـ|<sup>٢</sup><br>
+                أي أن |ب جـ|<sup>٢</sup> = |أ ب|<sup>٢</sup> + |أ جـ|<sup>٢</sup> #
+            </div>
+        </div>
+
+        <div class="column left-col">
+            <div class="math-text">
+                <span class="title-bold">مثال :</span><br>
+                في الشكل (٢ جـ) أ ب جـ مثلث قائم الزاوية في أ فيه :<br>
+                |أ ب| = ١٠ سم ، |أ جـ| = ٥ سم أوجد |ب جـ|<br>
+                <span class="title-bold">* الحل *</span><br>
+                ∵ أ ب جـ قائم الزاوية في أ<br>
+                ∴ |ب جـ|<sup>٢</sup> = |أ ب|<sup>٢</sup> + |أ جـ|<sup>٢</sup> تعوض<br>
+                ∴ |ب جـ|<sup>٢</sup> = ١٠٠ + ٢٥ = ١٢٥<br>
+                ∴ |ب جـ|<sup>٢</sup> = ٢٥ × ٥<br>
+                بأخذ الجذر التربيعي<br>
+                ∴ |ب جـ| = ٥√٥ سم
+            </div>
+
+            <div class="svg-container">
+                <svg width="150" height="100">
+                    <path d="M 30,20 L 30,80 L 120,80 Z" fill="none" stroke="black" stroke-width="1.5"/>
+                    <rect x="30" y="70" width="10" height="10" fill="none" stroke="black"/>
+                    <text x="25" y="15">أ</text> <text x="125" y="90">ب</text> <text x="20" y="90">جـ</text>
+                    <text x="5" y="55" font-size="10">١٠ سم</text> <text x="65" y="95" font-size="10">٥ سم</text>
+                    <text x="50" y="115">شكل (٢ جـ)</text>
+                </svg>
+            </div>
+
+            <div class="dashed-separator"></div>
+
+            <div class="math-text">
+                <span class="title-bold">مثال :</span><br>
+                س ص ع مثلث قائم الزاوية في ع فإذا كان |س ع| = ٥ سم ، |ص ع| = ١٢ سم فأوجد |س ص|<br>
+                <span class="title-bold">* الحل *</span><br>
+                |س ص|<sup>٢</sup> = |س ع|<sup>٢</sup> + |ص ع|<sup>٢</sup><br>
+                ∴ |س ص|<sup>٢</sup> = ٢٥ + ١٤٤ = ١٦٩<br>
+                ومنه |س ص| = √١٦٩ = ١٣ سم #
+            </div>
+
+            <div class="svg-container">
+                <svg width="150" height="100">
+                    <path d="M 120,20 L 20,80 L 120,80 Z" fill="none" stroke="black" stroke-width="1.5"/>
+                    <rect x="110" y="70" width="10" height="10" fill="none" stroke="black"/>
+                    <text x="125" y="20">س</text> <text x="10" y="90">ص</text> <text x="125" y="90">ع</text>
+                    <text x="130" y="55" font-size="10">٥ سم</text> <text x="65" y="95" font-size="10">١٢ سم</text>
+                </svg>
+            </div>
+
+            <div class="dashed-separator"></div>
+
+            <div class="theorem-box">
+                <span class="title-bold">عكس المبرهنة (٣): "عكس مبرهنة فيثاغورت" :</span><br>
+                <span class="title-bold">نصها :</span> في أي مثلث ، إذا كان مربع طول أحد أضلاعه مساوياً لمجموع مربعي طولي الضلعين الآخرين فإن المثلث يكون قائم الزاوية .
+            </div>
+
+            <div class="math-text">
+                <span class="title-bold">المعطيات :</span> أ ب جـ مثلث فيه |أ جـ|<sup>٢</sup> = |أ ب|<sup>٢</sup> + |ب جـ|<sup>٢</sup><br>
+                <span class="title-bold">المطلوب :</span> إثبات أن : ق(∠أ ب جـ) = ٩٠° قائمة .<br>
+                <span class="title-bold">العمل :</span> ننشئ د ك ⊥ ك جـ بحيث يكون |ك د| = |أ ب| ثم نصل د ب .<br>
+                <span class="title-bold">البرهان :</span> ∵ د ك ب قائم في ك (عملاً)<br>
+                ∴ ق(∠د ك ب) = ٩٠°<br>
+                ∴ |د ب|<sup>٢</sup> = |ك د|<sup>٢</sup> + |ك ب|<sup>٢</sup> "مبرهنة (٣) مبرهنة فيثاغورت" ← (١)<br>
+                ∵ |ك د| = |أ ب| (عملاً) فإن |ك د|<sup>٢</sup> = |أ ب|<sup>٢</sup> ← (٢)<br>
+                |د ب|<sup>٢</sup> = |أ ب|<sup>٢</sup> + |ك ب|<sup>٢</sup> ← (٣)<br>
+                |أ جـ|<sup>٢</sup> = |أ ب|<sup>٢</sup> + |ب جـ|<sup>٢</sup> "فرضاً معطى" ← (٤)<br>
+                فمن (٣) ، (٤) نجد : |د ب| = |أ جـ|<br>
+                ∴ |د ب| = |أ جـ|<br>
+                ∆∆ أ ب جـ ، د ك ب فيهما :<br>
+                |أ ب| = |ك د| (عملاً) |أ جـ| = |د ب| (إثباتاً) |ب جـ| مشتركة<br>
+                ∴ يتطابق ∆∆ وينتج من هذا التطابق أن :<br>
+                ق(∠أ ب جـ) = ق(∠د ك ب)<br>
+                وحيث ق(∠د ك ب) = ٩٠° (عملاً)<br>
+                ∴ ق(∠أ ب جـ) = ٩٠° (قائمة) وهو المطلوب #
+            </div>
+            
+            <div class="svg-container">
+                <svg width="200" height="120" viewBox="0 0 200 120">
+                    <path d="M 40,20 L 40,100 L 140,100 Z" fill="none" stroke="black" stroke-width="1.5"/>
+                    <path d="M 180,20 L 180,100 L 80,100 Z" stroke-dasharray="4" fill="none" stroke="black" stroke-width="1.2"/>
+                    <rect x="40" y="90" width="10" height="10" fill="none" stroke="black"/>
+                    <text x="35" y="15">أ</text> <text x="35" y="115">ب</text> <text x="145" y="115">جـ</text>
+                    <text x="175" y="15">د</text> <text x="175" y="115">ك</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

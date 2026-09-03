@@ -7,7 +7,8 @@ class ProgressLocalService {
   static String _key(String bookId) => 'progress_$bookId';
 
   /// الحد الأدنى من الثواني لاعتبار الصفحة مقروءة
-  static const int _minSecondsPerPage = 10;
+  /// 375 ثانية/صفحة → في 30 دقيقة يزداد التقدم بنسبة ~1% فقط
+  static const int _minSecondsPerPage = 375;
 
   /// ==========================================
   /// التقدم الحقيقي = f(وقت + نقرات + صفحات)
@@ -23,6 +24,21 @@ class ProgressLocalService {
     required int totalClicks,
     required int totalPages,
   }) {
+    return computeProgressFromRaw(
+      totalTimeSeconds: totalTimeSeconds,
+      uniquePagesCount: uniquePagesCount,
+      totalClicks: totalClicks,
+      totalPages: totalPages,
+    );
+  }
+
+  /// دالة عامة لإعادة حساب التقدم من البيانات الخام (تُستخدم أيضاً من ولي الأمر)
+  static double computeProgressFromRaw({
+    required int totalTimeSeconds,
+    required int uniquePagesCount,
+    required int totalClicks,
+    required int totalPages,
+  }) {
     if (totalPages <= 0) return 0.0;
 
     // درجة الوقت (40%)
@@ -32,11 +48,11 @@ class ProgressLocalService {
 
     // درجة الصفحات المفتوحة (40%)
     final double pagesScore =
-        (uniquePagesCount / totalPages).clamp(0.0, 1.0);
+        (uniquePagesCount / (totalPages * 10.0)).clamp(0.0, 1.0);
 
     // درجة التفاعل (20%)
     final double clickScore =
-        (totalClicks / (totalPages * 5.0)).clamp(0.0, 1.0);
+        (totalClicks / (totalPages * 50.0)).clamp(0.0, 1.0);
 
     return (timeScore * 0.4 + pagesScore * 0.4 + clickScore * 0.2)
         .clamp(0.0, 1.0);

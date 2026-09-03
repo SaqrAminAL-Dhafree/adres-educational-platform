@@ -8,26 +8,6 @@ class ApiService {
 
   // ========== مصادقة الطالب ==========
   static Future<Map<String, dynamic>?> loginStudent(String academicId) async {
-    // حسابات تجريبية محلية
-    if (academicId == '78246') {
-      return {
-        'id': '1',
-        'academic_id': '78246',
-        'full_name': 'أحمد محمد علي',
-        'grade_level': 'التاسع',
-        'class_id': 'class_9A',
-        'class_name': 'التاسع - أ',
-        'subjects': [
-          {'id': '1', 'name': 'رياضيات', 'icon': 'calculate'},
-          {'id': '2', 'name': 'علوم', 'icon': 'science'},
-          {'id': '3', 'name': 'لغة عربية', 'icon': 'menu_book'},
-          {'id': '4', 'name': 'قرآن', 'icon': 'book'},
-          {'id': '5', 'name': 'إسلامية', 'icon': 'book'},
-          {'id': '6', 'name': 'تاريخ', 'icon': 'history_edu'},
-        ],
-      };
-    }
-
     try {
       final res = await http.get(
         Uri.parse('$base/api/students/?academic_id=$academicId'),
@@ -42,33 +22,22 @@ class ApiService {
     return null;
   }
 
+  // ========== تعيين / تغيير كلمة مرور الطالب ==========
+  static Future<bool> setStudentPassword(String academicId, String password) async {
+    try {
+      final res = await http.post(
+        Uri.parse('$base/api/students/$academicId/set_password/'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'password': password}),
+      ).timeout(const Duration(seconds: 10));
+      return res.statusCode == 200;
+    } catch (_) {}
+    return false;
+  }
+
   // ========== مصادقة المعلم ==========
   static Future<Map<String, dynamic>?> loginTeacher(
       String teacherId, String password) async {
-    // حساب تجريبي
-    if (teacherId == '78246' && password == '123') {
-      return {
-        'id': 'teacher_1',
-        'teacher_id': '78246',
-        'full_name': 'أ. محمد عبدالله',
-        'subject': 'رياضيات',
-        'classes': [
-          {
-            'id': 'class_9A',
-            'name': 'التاسع - أ',
-            'students_count': 32,
-            'active_rate': 0.75,
-          },
-          {
-            'id': 'class_9B',
-            'name': 'التاسع - ب',
-            'students_count': 28,
-            'active_rate': 0.60,
-          },
-        ],
-      };
-    }
-
     try {
       final res = await http.post(
         Uri.parse('$base/api/teachers/login/'),
@@ -85,24 +54,6 @@ class ApiService {
 
   // ========== مصادقة ولي الأمر ==========
   static Future<Map<String, dynamic>?> loginParent(String parentId) async {
-    // حساب تجريبي
-    if (parentId == '78246') {
-      return {
-        'id': 'parent_1',
-        'parent_id': '78246',
-        'full_name': 'محمد علي الحسن (ولي الأمر)',
-        'children': [
-          {
-            'id': '1',
-            'academic_id': '78246',
-            'full_name': 'أحمد محمد علي',
-            'grade_level': 'التاسع',
-            'class_name': 'التاسع - أ',
-          },
-        ],
-      };
-    }
-
     try {
       final res = await http.get(
         Uri.parse('$base/api/parents/?parent_id=$parentId'),
@@ -110,6 +61,7 @@ class ApiService {
 
       if (res.statusCode == 200) {
         final data = jsonDecode(res.body);
+        if (data is List && data.isNotEmpty) return Map<String, dynamic>.from(data[0]);
         if (data is Map) return Map<String, dynamic>.from(data);
       }
     } catch (_) {}
@@ -119,25 +71,57 @@ class ApiService {
   // ========== إضافة طالب لولي الأمر ==========
   static Future<Map<String, dynamic>?> addChildToParent(
       String parentId, String childAcademicId) async {
-    if (childAcademicId == '78246') {
-      return {
-        'id': '1',
-        'academic_id': '78246',
-        'full_name': 'أحمد محمد علي',
-        'grade_level': 'التاسع',
-        'class_name': 'التاسع - أ',
-      };
-    }
-
     try {
-      final res = await http.get(
-        Uri.parse('$base/api/students/?academic_id=$childAcademicId'),
+      final res = await http.post(
+        Uri.parse('$base/api/parents/$parentId/add_child/'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'academic_id': childAcademicId}),
       ).timeout(const Duration(seconds: 10));
 
-      if (res.statusCode == 200) {
-        final data = jsonDecode(res.body);
-        if (data is List && data.isNotEmpty) return Map<String, dynamic>.from(data[0]);
+      if (res.statusCode == 200 || res.statusCode == 201) {
+        return jsonDecode(res.body) as Map<String, dynamic>;
       }
+    } catch (_) {}
+    return null;
+  }
+
+  // ========== إضافة طالب للمعلم ==========
+  static Future<Map<String, dynamic>?> addStudentToTeacher(
+      String teacherId, String academicId, String className) async {
+    try {
+      final res = await http.post(
+        Uri.parse('$base/api/teachers/$teacherId/add_student/'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'academic_id': academicId, 'class_name': className}),
+      ).timeout(const Duration(seconds: 10));
+      if (res.statusCode == 200) return jsonDecode(res.body) as Map<String, dynamic>;
+    } catch (_) {}
+    return null;
+  }
+
+  // ========== حذف طالب من المعلم ==========
+  static Future<bool> removeStudentFromTeacher(
+      String teacherId, String academicId) async {
+    try {
+      final res = await http.delete(
+        Uri.parse('$base/api/teachers/$teacherId/remove_student/$academicId/'),
+      ).timeout(const Duration(seconds: 10));
+      return res.statusCode == 200;
+    } catch (_) {}
+    return false;
+  }
+
+  // ========== تحديث شعبة الطالب ==========
+  static Future<Map<String, dynamic>?> updateStudentClass(
+      String academicId, String classId, String className) async {
+    try {
+      final res = await http.patch(
+        Uri.parse('$base/api/students/$academicId/update_class/'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'class_id': classId, 'class_name': className}),
+      ).timeout(const Duration(seconds: 10));
+
+      if (res.statusCode == 200) return jsonDecode(res.body) as Map<String, dynamic>;
     } catch (_) {}
     return null;
   }
@@ -147,12 +131,23 @@ class ApiService {
       String academicId, String bookId) async {
     try {
       final res = await http.get(
-        Uri.parse(
-            '$base/api/progress/?academic_id=$academicId&book=$bookId'),
+        Uri.parse('$base/api/progress/?academic_id=$academicId&book=$bookId'),
       ).timeout(const Duration(seconds: 10));
+      if (res.statusCode == 200) return jsonDecode(res.body) as Map<String, dynamic>;
+    } catch (_) {}
+    return null;
+  }
 
+  // ========== جلب بيانات المعلم ==========
+  static Future<Map<String, dynamic>?> getTeacherData(String teacherId) async {
+    try {
+      final res = await http.get(
+        Uri.parse('$base/api/teachers/?teacher_id=$teacherId'),
+      ).timeout(const Duration(seconds: 10));
       if (res.statusCode == 200) {
-        return jsonDecode(res.body) as Map<String, dynamic>;
+        final data = jsonDecode(res.body);
+        if (data is List && data.isNotEmpty) return Map<String, dynamic>.from(data[0]);
+        if (data is Map) return Map<String, dynamic>.from(data);
       }
     } catch (_) {}
     return null;

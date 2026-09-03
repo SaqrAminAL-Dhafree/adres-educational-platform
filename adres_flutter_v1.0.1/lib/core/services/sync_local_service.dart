@@ -37,6 +37,19 @@ class SyncLocalService {
     }
   }
 
+  /// إعادة تعيين جميع البيانات كغير مزامنة (لإجبار إعادة الرفع بالقيم الجديدة)
+  static void markAllAsUnsynced() {
+    for (final key in _box.keys) {
+      if (!key.toString().startsWith('progress_')) continue;
+      final val = _box.get(key);
+      if (val is Map && val['isSynced'] == true) {
+        final updated = Map<dynamic, dynamic>.from(val);
+        updated['isSynced'] = false;
+        _box.put(key, updated);
+      }
+    }
+  }
+
   /// مزامنة التقدم مع السيرفر
   static Future<bool> syncProgressToServer() async {
     final pending = getAllPendingSyncData();

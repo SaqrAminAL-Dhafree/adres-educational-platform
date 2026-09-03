@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة ٧١ - المعلم المثالي (تبديل الاتجاهات)</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 10px;
+            color: #000;
+            line-height: 1.4;
+        }
+        .page-container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            border: 2px solid #000;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header-page {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            border-bottom: 2px solid #000;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+        }
+        .main-content {
+            display: flex;
+            gap: 20px;
+        }
+        .column {
+            flex: 1;
+        }
+        
+        /* التبديل: العمود الذي كان يساراً يصبح يميناً */
+        .right-col {
+            order: 1;
+            border-left: 1px solid #000;
+            padding-left: 15px;
+        }
+        /* العمود الذي كان يميناً يصبح يساراً */
+        .left-col {
+            order: 2;
+        }
+
+        .section-box {
+            border: 1px solid #000;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        .title-bold {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        .math-text {
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+        .fraction {
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            margin: 0 2px;
+        }
+        .fraction .top {
+            display: block;
+            border-bottom: 1px solid #000;
+            padding: 0 3px;
+        }
+        .fraction .bottom {
+            display: block;
+            padding: 0 2px;
+        }
+        .dashed-separator {
+            border-top: 1px dashed #000;
+            margin: 15px 0;
+        }
+        .highlight-box {
+            border: 2px double #000;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #fdfdfd;
+        }
+        .svg-drawing {
+            display: block;
+            margin: 10px auto;
+            text-align: center;
+        }
+        
+        /* استجابة الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .right-col {
+                order: 1;
+                border-left: none;
+                border-bottom: 2px solid #000;
+                padding-bottom: 20px;
+                padding-left: 0;
+            }
+            .left-col {
+                order: 2;
+                padding-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-container">
+    <div class="header-page">ـ ٧١ ـ</div>
+
+    <div class="main-content">
+        <div class="column right-col">
+            <div class="math-text">
+                <span class="title-bold">مثال:</span> أ ب جـ مثلث قائم الزاوية في ب فيه ق ( ∠ جـ ) = ٦٠ ْ <br>
+                | ب جـ | = ٨ سم <br>
+                فأوجد كلاً من : | أ جـ | ، | أ ب | <br>
+                حيث √٣ ≈ ١,٧ تقريباً .
+            </div>
+
+            <div class="svg-drawing">
+                <svg width="120" height="150" viewBox="0 0 120 150">
+                    <path d="M 20,20 L 20,130 L 100,130 Z" fill="none" stroke="black" stroke-width="1.5"/>
+                    <polyline points="20,120 30,120 30,130" fill="none" stroke="black" stroke-width="1"/>
+                    <text x="15" y="15">أ</text>
+                    <text x="10" y="145">ب</text>
+                    <text x="105" y="145">جـ</text>
+                    <text x="75" y="125" font-size="12">٦٠ ْ</text>
+                    <text x="40" y="145">٨ سم مجاور</text>
+                    <text x="0" y="80" transform="rotate(-90 5,80)">مقابل</text>
+                    <text x="70" y="70" transform="rotate(-55 70,70)">وتر</text>
+                </svg>
+            </div>
+
+            <div class="math-text">
+                <span class="title-bold">* الحل *</span><br>
+                ∵ ق ( ∠ جـ ) = ٦٠ ْ تقابل الضلع | أ ب | ، | ب جـ | = ٨ سم<br>
+                فمن ∆ أ ب جـ نجد :<br>
+                جتا جـ = <div class="fraction"><span class="top">| ب جـ |</span><span class="bottom">| أ جـ |</span></div> ، نعوض فيها جتا ٦٠ ْ = <div class="fraction"><span class="top">٨</span><span class="bottom">| أ جـ |</span></div><br>
+                <div class="fraction"><span class="top">١</span><span class="bottom">٢</span></div> = <div class="fraction"><span class="top">٨</span><span class="bottom">| أ جـ |</span></div> ومنها | أ جـ | = ١٦ سم ( ضربنا الطرفين في الوسطين )<br>
+                | أ ب |<sup>٢</sup> = | أ جـ |<sup>٢</sup> - | ب جـ |<sup>٢</sup> ومنها :<br>
+                | أ ب |<sup>٢</sup> = (١٦)<sup>٢</sup> - (٨)<sup>٢</sup> ( من مبرهنة فيثاغورث )<br>
+                | أ ب |<sup>٢</sup> = ٢٥٦ - ٦٤ = ١٩٢ = ٦٤ × ٣<br>
+                ∴ | أ ب | = √<span style="text-decoration: overline;">٦٤ × ٣</span> = ٨√٣ ≈ ٨ × ١,٧ = ١٣,٦ سم
+            </div>
+
+            <div class="section-box">
+                <span class="title-bold">تدريب:</span> أثبت صحة ما يلي : -<br>
+                أ) جا ٦٠ ْ = ٢ جا ٣٠ ْ جتا ٣٠ ْ<br>
+                ب) ١ + ظا<sup>٢</sup> ٣٠ ْ = <div class="fraction"><span class="top">١</span><span class="bottom">جتا<sup>٢</sup> ٣٠ ْ</span></div>
+            </div>
+
+            <div class="highlight-box">
+                <span class="title-bold">تذكر دائماً أن:</span><br>
+                * جا<sup>٢</sup>هـ + جتا<sup>٢</sup>هـ = ١ ، ظا هـ = <div class="fraction"><span class="top">جا هـ</span><span class="bottom">جتا هـ</span></div><br>
+                حيث هـ قياس أي زاوية<br>
+                * جا ٤٥ ْ = جتا ٤٥ ْ = <div class="fraction"><span class="top">١</span><span class="bottom">√٢</span></div> أو <div class="fraction"><span class="top">√٢</span><span class="bottom">٢</span></div><br>
+                * جا ٦٠ ْ = جتا ٣٠ ْ = <div class="fraction"><span class="top">√٣</span><span class="bottom">٢</span></div><br>
+                * جا ٣٠ ْ = جتا ٦٠ ْ = <div class="fraction"><span class="top">١</span><span class="bottom">٢</span></div><br>
+                * ظا ٤٥ ْ = ١ ، ظا ٣٠ ْ = <div class="fraction"><span class="top">١</span><span class="bottom">√٣</span></div> ، ظا ٦٠ ْ = √٣
+            </div>
+
+            <div class="math-text">
+                <span class="title-bold">مثال:</span> أوجد قيمة كلاً مما يلي :<br>
+                أ) <div class="fraction"><span class="top">٢</span><span class="bottom">٣</span></div> جا<sup>٢</sup> ٣٠ ْ جتا ٦٠ ْ + <div class="fraction"><span class="top">١</span><span class="bottom">٢</span></div> جتا ٣٠ ْ ظا ٤٥ ْ<br>
+                ب) ٢ جا ٤٥ ْ جتا ٤٥ ْ - <div class="fraction"><span class="top">١</span><span class="bottom">جتا<sup>٢</sup> ٣٠ ْ</span></div> + ٤ ظا<sup>٢</sup> ٣٠ ْ<br>
+                <span class="title-bold">* الحل *</span><br>
+                أ) <div class="fraction"><span class="top">٢</span><span class="bottom">٣</span></div> جا<sup>٢</sup> ٣٠ ْ جتا ٦٠ ْ + <div class="fraction"><span class="top">١</span><span class="bottom">٢</span></div> جتا ٣٠ ْ ظا ٤٥ ْ <br>
+                = <div class="fraction"><span class="top">٢</span><span class="bottom">٣</span></div> × <div class="fraction"><span class="top">١</span><span class="bottom">٤</span></div> × <div class="fraction"><span class="top">١</span><span class="bottom">٢</span></div> + <div class="fraction"><span class="top">١</span><span class="bottom">٢</span></div> × <div class="fraction"><span class="top">√٣</span><span class="bottom">٢</span></div> × ١ = <br>
+                = <div class="fraction"><span class="top">١</span><span class="bottom">١٢</span></div> + <div class="fraction"><span class="top">√٣</span><span class="bottom">٤</span></div> = <div class="fraction"><span class="top">١ + ٣√٣</span><span class="bottom">١٢</span></div><br>
+                ب) ٢ جا ٤٥ ْ جتا ٤٥ ْ - <div class="fraction"><span class="top">١</span><span class="bottom">جتا<sup>٢</sup> ٣٠ ْ</span></div> + ٤ ظا<sup>٢</sup> ٣٠ ْ<br>
+                = ٢ × <div class="fraction"><span class="top">١</span><span class="bottom">√٢</span></div> × <div class="fraction"><span class="top">١</span><span class="bottom">√٢</span></div> - <div class="fraction"><span class="top">١</span><span class="bottom">(√٣ / ٢)<sup>٢</sup></span></div> + ٤ × ( <div class="fraction"><span class="top">١</span><span class="bottom">√٣</span></div> )<sup>٢</sup> = <br>
+                = ١ - <div class="fraction"><span class="top">٤</span><span class="bottom">٣</span></div> + <div class="fraction"><span class="top">٤</span><span class="bottom">٣</span></div> = ١ #
+            </div>
+        </div>
+
+        <div class="column left-col">
+            <div class="math-text">
+                <span class="title-bold">مثال هام:</span> أ ب جـ مثلث قائم الزاوية في أ ، أنشأنا ب ء عمودياً على ب جـ بحيث يلاقي امتداد جـ أ في ء فإذا كان:<br>
+                | أ ب | = ١٢ سم ، | أ جـ | = ١٦ سم فأوجد :<br>
+                أولاً : | أ ء | ، | ب ء | .<br>
+                ثانياً : جتا ( ∠ ب جـ ء ) ، ظا ( ∠ أ ء ب ) ، جا ( ∠ أ ب ء )
+            </div>
+
+            <div class="svg-drawing">
+                <svg width="200" height="150" viewBox="0 0 200 150">
+                    <path d="M 40,120 L 160,120 L 40,20 Z" fill="none" stroke="black" stroke-width="1.5"/>
+                    <line x1="40" y1="120" x2="10" y2="80" stroke="black" stroke-width="1.5"/>
+                    <line x1="10" y1="80" x2="40" y2="20" stroke="black" stroke-width="1.5"/>
+                    <polyline points="40,110 50,110 50,120" fill="none" stroke="black" stroke-width="1"/>
+                    <polyline points="20,85 25,75 15,70" fill="none" stroke="black" stroke-width="1"/>
+                    <text x="35" y="135">أ</text>
+                    <text x="165" y="125">جـ</text>
+                    <text x="50" y="75">١٢سم</text>
+                    <text x="80" y="135">١٦سم</text>
+                    <text x="45" y="15">ء</text>
+                    <text x="2" y="85">ب</text>
+                </svg>
+            </div>
+
+            <div class="math-text">
+                <span class="title-bold">* الحل *</span><br>
+                أولاً: | أ ب |<sup>٢</sup> = | أ ء | × | أ جـ | ( مبرهنة ١ )<br>
+                ١٤٤ = | أ ء | × ١٦ &nbsp; ∴ | أ ء | = <div class="fraction"><span class="top">١٤٤</span><span class="bottom">١٦</span></div> = ٩ سم<br>
+                | ب ء |<sup>٢</sup> = | أ ب |<sup>٢</sup> + | أ ء |<sup>٢</sup> ( مبرهنة فيثاغورث )<br>
+                | ب ء |<sup>٢</sup> = ١٤٤ + ٨١ = ٢٢٥ ومنه | ب ء | = √<span style="text-decoration: overline;">٢٢٥</span> = ١٥ سم<br>
+                ثانياً: جتا ( ∠ ب جـ ء ) = <div class="fraction"><span class="top">| أ جـ |</span><span class="bottom">| ب جـ |</span></div> لذلك نحسب قيمة | ب جـ |<br>
+                | ب جـ |<sup>٢</sup> = | أ ب |<sup>٢</sup> + | أ جـ |<sup>٢</sup> = ١٤٤ + ٢٥٦ = ٤٠٠<br>
+                ∴ | ب جـ | = √<span style="text-decoration: overline;">٤٠٠</span> = ٢٠ سم<br>
+                ∴ جا ( ∠ ب جـ ء ) = <div class="fraction"><span class="top">| أ ب |</span><span class="bottom">| ب جـ |</span></div> = <div class="fraction"><span class="top">١٢</span><span class="bottom">٢٠</span></div> = <div class="fraction"><span class="top">٣</span><span class="bottom">٥</span></div><br>
+                ، جتا ( ∠ ب جـ ء ) = <div class="fraction"><span class="top">| أ جـ |</span><span class="bottom">| ب جـ |</span></div> = <div class="fraction"><span class="top">١٦</span><span class="bottom">٢٠</span></div> = <div class="fraction"><span class="top">٤</span><span class="bottom">٥</span></div><br>
+                ، ظا ( ∠ أ ء ب ) = <div class="fraction"><span class="top">| أ ب |</span><span class="bottom">| أ ء |</span></div> = <div class="fraction"><span class="top">١٢</span><span class="bottom">٩</span></div> = <div class="fraction"><span class="top">٤</span><span class="bottom">٣</span></div><br>
+                ، جا ( ∠ أ ب ء ) = <div class="fraction"><span class="top">| أ ء |</span><span class="bottom">| ب ء |</span></div> = <div class="fraction"><span class="top">٩</span><span class="bottom">١٥</span></div> = <div class="fraction"><span class="top">٣</span><span class="bottom">٥</span></div>
+            </div>
+
+            <div class="dashed-separator"></div>
+
+            <div class="math-text">
+                <span class="title-bold">مثال:</span> أثبت أن جتا٢س = جتا<sup>٢</sup>س - جا<sup>٢</sup>س إذا علمت أن ق ( ∠ س ) = ٣٠ ْ .<br>
+                <span class="title-bold">* الحل *</span><br>
+                الطرف الأيمن = جتا٢س = جتا(٢×٣٠) = جتا٦٠ ْ = <div class="fraction"><span class="top">١</span><span class="bottom">٢</span></div> ← (١)<br>
+                الطرف الأيسر = جتا<sup>٢</sup> ٣٠ ْ - جا<sup>٢</sup> ٣٠ ْ = ( <div class="fraction"><span class="top">√٣</span><span class="bottom">٢</span></div> )<sup>٢</sup> - ( <div class="fraction"><span class="top">١</span><span class="bottom">٢</span></div> )<sup>٢</sup><br>
+                = <div class="fraction"><span class="top">٣</span><span class="bottom">٤</span></div> - <div class="fraction"><span class="top">١</span><span class="bottom">٤</span></div> = <div class="fraction"><span class="top">٢</span><span class="bottom">٤</span></div> = <div class="fraction"><span class="top">١</span><span class="bottom">٢</span></div> ← (٢)<br>
+                ∴ من (١) ، (٢) ينتج أن الطرف الأيمن = الطرف الأيسر
+            </div>
+
+            <div class="dashed-separator"></div>
+
+            <div class="math-text">
+                <span class="title-bold">مثال:</span> أثبت أن جتا<sup>٢</sup>هـ + جتا<sup>٢</sup>هـ ظا<sup>٢</sup>هـ = ١<br>
+                <span class="title-bold">* الحل *</span><br>
+                الطرف الأيمن = جتا<sup>٢</sup>هـ + جتا<sup>٢</sup>هـ ظا<sup>٢</sup>هـ بأخذ مشترك جتا<sup>٢</sup>هـ<br>
+                = جتا<sup>٢</sup>هـ ( ١ + ظا<sup>٢</sup>هـ )<br>
+                ، جا<sup>٢</sup>هـ + جتا<sup>٢</sup>هـ = ١ ( علاقة مثلثية مشهورة )<br>
+                ∴ الطرف الأيمن = جتا<sup>٢</sup>هـ × ١ = جتا<sup>٢</sup>هـ = الطرف الأيسر .
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

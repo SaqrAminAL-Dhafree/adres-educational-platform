@@ -1,5 +1,6 @@
 from django.contrib.auth.hashers import make_password, check_password
 from django.db import models
+from students.models import Student
 
 
 class Teacher(models.Model):
@@ -7,6 +8,13 @@ class Teacher(models.Model):
     password = models.CharField(max_length=128, verbose_name="كلمة المرور")
     full_name = models.CharField(max_length=100, verbose_name="الاسم الكامل")
     subject = models.CharField(max_length=100, verbose_name="المادة")
+    students = models.ManyToManyField(
+        Student,
+        through='TeacherStudent',
+        blank=True,
+        related_name='teachers',
+        verbose_name="الطلاب المُسندون",
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def set_password(self, raw_password):
@@ -15,12 +23,29 @@ class Teacher(models.Model):
     def check_password(self, raw_password):
         return check_password(raw_password, self.password)
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.full_name} ({self.teacher_id})"
 
     class Meta:
         verbose_name = "معلم"
         verbose_name_plural = "المعلمون"
+
+
+class TeacherStudent(models.Model):
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name="المعلم")
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name="الطالب")
+    class_name = models.CharField(max_length=100, blank=True, verbose_name="الشعبة")
+
+    class Meta:
+        unique_together = ('teacher', 'student')
+        verbose_name = "طالب المعلم"
+        verbose_name_plural = "طلاب المعلم"
+
+    def __str__(self):
+        return f"{self.student.full_name} ← {self.teacher.full_name} ({self.class_name})"
 
 
 class TeacherClass(models.Model):

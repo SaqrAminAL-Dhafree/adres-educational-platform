@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة ٦٦ - المعلم المثالي (معدل)</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #fdfdfd;
+            margin: 0;
+            padding: 10px;
+            color: #000;
+            line-height: 1.5;
+        }
+        .page-container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            border: 2px solid #000;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header-page {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            border-bottom: 2px solid #000;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+        }
+        .main-content {
+            display: flex;
+            gap: 20px;
+        }
+        .column {
+            flex: 1;
+        }
+        /* ترتيب الأعمدة للهاتف: الأيمن أولاً */
+        .right-col {
+            order: 1;
+            border-left: 1px solid #000;
+            padding-left: 15px;
+        }
+        .left-col {
+            order: 2;
+        }
+
+        .title-bold {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        .math-text {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        .fraction {
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            margin: 0 2px;
+        }
+        .fraction .top {
+            display: block;
+            border-bottom: 1px solid #000;
+            padding: 0 3px;
+        }
+        .fraction .bottom {
+            display: block;
+            padding: 0 3px;
+        }
+        .dashed-separator {
+            border-top: 1px dashed #000;
+            margin: 15px 0;
+        }
+        .highlight-box {
+            border: 1px solid #000;
+            padding: 8px;
+            margin: 10px 0;
+            background-color: #f9f9f9;
+        }
+        .svg-drawing {
+            display: block;
+            margin: 10px auto;
+            text-align: center;
+        }
+        
+        /* استجابة الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .right-col {
+                order: 1;
+                border-left: none;
+                border-bottom: 2px solid #000;
+                padding-bottom: 20px;
+                padding-left: 0;
+            }
+            .left-col {
+                order: 2;
+                padding-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-container">
+    <div class="header-page">ـ ٦٦ ـ</div>
+
+    <div class="main-content">
+        <div class="column right-col">
+            <div class="math-text">
+                <span class="title-bold">مثال :</span> إذا كانت أطوال أضلاع المثلث س ص ع هي على الترتيب :<br>
+                ١٠ سم ، ٢٤ سم ، ٢٦ سم فأثبت أن المثلث قائم الزاوية في ص
+            </div>
+            
+            <div class="math-text">
+                <span class="title-bold">* الحل *</span><br>
+                <sup>٢</sup>(١٠) = ١٠٠ ، <sup>٢</sup>(٢٤) = ٥٧٦ ، <sup>٢</sup>(٢٦) = ٦٧٦ <br>
+                ∵ ٦٧٦ = ١٠٠ + ٥٧٦ أي أن <sup>٢</sup>(٢٦) = <sup>٢</sup>(١٠) + <sup>٢</sup>(٢٤)<br>
+                أي : |س ع|<sup>٢</sup> = |س ص|<sup>٢</sup> + |ص ع|<sup>٢</sup><br>
+                ∴ ∆ س ص ع قائم الزاوية في ص ( عكس مبرهنة ٣ ) #
+            </div>
+
+            <div class="highlight-box">
+                <span class="title-bold">٤ : ١ حل تمارين ومسائل الكتاب الوزاري ص ١٧٢-١٧٣</span><br>
+                <span class="title-bold">على المبرهنات ١ ، ٢ ، ٣ وعكس مبرهنة (٣)</span>
+            </div>
+
+            <div class="math-text">
+                <span class="title-bold">|١| أ ب جـ مثلث قائم الزاوية في أ في كل من الحالات التالية :</span><br>
+                <span class="title-bold">معطى ضلعين من المثلث أوجد طول الضلع الثالث .</span>
+            </div>
+
+            <div class="svg-drawing">
+                <svg width="120" height="100" viewBox="0 0 120 100">
+                    <path d="M 20,20 L 20,80 L 100,80 Z" fill="none" stroke="black" stroke-width="1.5"/>
+                    <polyline points="20,70 30,70 30,80" fill="none" stroke="black" stroke-width="1"/>
+                    <text x="15" y="15">أ</text>
+                    <text x="10" y="95">ب</text>
+                    <text x="105" y="95">جـ</text>
+                </svg>
+            </div>
+
+            <div class="math-text">
+                أ) |أ ب| = ٣ سم ، |أ جـ| = ٤ سم<br>
+                ب) |أ ب| = ٨ سم ، |ب جـ| = ١٠ سم<br>
+                جـ) |أ جـ| = ٦,٥ سم ، |ب جـ| = ٩,٥ سم<br>
+                <span class="title-bold">* الحل *</span><br>
+                أ) |أ ب| = ٣ سم ، |أ جـ| = ٤ سم ، |ب جـ| = ؟<br>
+                |ب جـ|<sup>٢</sup> = |أ ب|<sup>٢</sup> + |أ جـ|<sup>٢</sup><br>
+                |ب جـ|<sup>٢</sup> = ٩ + ١٦ = ٢٥ ومنه |ب جـ| = √<span style="text-decoration: overline;">٢٥</span> = ٥ سم<br>
+                ب) |أ ب| = ٨ سم ، |ب جـ| = ١٠ سم ، |أ جـ| = ؟<br>
+                |أ جـ|<sup>٢</sup> = |ب جـ|<sup>٢</sup> - |أ ب|<sup>٢</sup> ( من مبرهنة فيثاغورث )<br>
+                |أ جـ|<sup>٢</sup> = ١٠٠ - ٦٤ = ٣٦ ومنه |أ جـ| = √<span style="text-decoration: overline;">٣٦</span> = ٦ سم<br>
+                جـ) |أ جـ| = ٦,٥ سم ، |ب جـ| = ٩,٥ سم ، |أ ب| = ؟<br>
+                |أ ب|<sup>٢</sup> = |ب جـ|<sup>٢</sup> - |أ جـ|<sup>٢</sup> ( من مبرهنة فيثاغورث )<br>
+                |أ ب|<sup>٢</sup> = ٩٠,٢٥ - ٤٢,٢٥ = ٤٨<br>
+                |أ ب| = √<span style="text-decoration: overline;">٤٨</span> = √<span style="text-decoration: overline;">١٦ × ٣</span> ومنه |أ ب| = ٤√٣ سم
+            </div>
+
+            <div class="dashed-separator"></div>
+
+            <div class="math-text">
+                <span class="title-bold">|٢| إثبات أياً من الثلاثيات الطولية التالية تمثل أضلاع مثلث قائم .</span><br>
+                أ) ٦ سم ، ٨ سم ، ٦ سم &nbsp; ب) ٣ سم ، ٤ سم ، ٥ سم<br>
+                جـ) ٥ سم ، ٥ سم ، ٧,٥ سم &nbsp; د) ٦ سم ، ٣√٣ سم ، ٣ سم<br>
+                هـ) ٣ سم ، ٥ سم ، ٧ سم .<br>
+                <span class="title-bold">* الحل *</span><br>
+                أ) ٦ سم ، ٦ سم ، ٨ سم لا تمثل أضلاع مثلث قائم والسبب لأن :<br>
+                <sup>٢</sup>(٦) + <sup>٢</sup>(٦) ≠ <sup>٢</sup>(٨) أي أن ٣٦ + ٣٦ ≠ ٦٤
+            </div>
+        </div>
+
+        <div class="column left-col">
+            <div class="math-text">
+                ب) ٣ سم ، ٤ سم ، ٥ سم<br>
+                <sup>٢</sup>(٥) = <sup>٢</sup>(٣) + <sup>٢</sup>(٤) أي أن ٢٥ = ٩ + ١٦<br>
+                ∴ تلك الأطوال تمثل أضلاع مثلث قائم .<br><br>
+                جـ) ٥ سم ، ٥ سم ، ٧,٥ سم<br>
+                ∵ مربع أي ضلع ≠ مجموع مربعي الضلعين الآخرين .<br>
+                ∴ تلك الأطوال لا تمثل أضلاع مثلث قائم .<br><br>
+                د) ٦ سم ، ٣√٣ سم ، ٣ سم<br>
+                <sup>٢</sup>(٦) = <sup>٢</sup>(٣) + <sup>٢</sup>(٣√٣) ، ٣٦ = ٩ + ٢٧<br>
+                ∵ ٣٦ = ٩ + ٢٧ بالتالي تمثل أضلاع مثلث قائم .<br><br>
+                هـ) ٣ سم ، ٥ سم ، ٧ سم لا تمثل أضلاع مثلث قائم لأن :<br>
+                مربع أي ضلع ≠ مجموع مربعي الضلعين الآخرين .
+            </div>
+
+            <div class="dashed-separator"></div>
+
+            <div class="math-text">
+                <span class="title-bold">|٣| أ ب جـ ∆ قائم الزاوية في جـ ، جـ د ⊥ أ ب فيه :</span><br>
+                <div class="svg-drawing">
+                    <svg width="180" height="110" viewBox="0 0 180 110">
+                        <path d="M 20,90 L 160,90 L 20,20 Z" fill="none" stroke="black" stroke-width="1.5"/>
+                        <line x1="20" y1="90" x2="80" y2="60" stroke="black" stroke-width="1.5"/>
+                        <polyline points="20,80 30,80 30,90" fill="none" stroke="black" stroke-width="1"/>
+                        <text x="15" y="15">أ</text>
+                        <text x="165" y="100">ب</text>
+                        <text x="10" y="105">جـ</text>
+                        <text x="85" y="60">د</text>
+                    </svg>
+                </div>
+                أ) |ب جـ| = ٤ سم ، |أ ب| = ١١ سم ، احسب |جـ ب| ، |حـ ب|<br>
+                <span class="title-bold">* الحل *</span><br>
+                من مبرهنة (١) |جـ ب|<sup>٢</sup> = |أ ب| × |ب د|<br>
+                ١٦ = ١١ × |ب د| ومنه |ب د| = <div class="fraction"><span class="top">١٦</span><span class="bottom">١١</span></div> سم<br><br>
+                ب) |جـ د| = ١٠ سم ، |ب د| = ٥ سم احسب |أ د|<br>
+                <span class="title-bold">* الحل *</span><br>
+                |جـ د|<sup>٢</sup> = |ب د| × |أ د| ( مبرهنة ٢ )<br>
+                ١٠٠ = ٥ × |أ د| ومنه |أ د| = <div class="fraction"><span class="top">١٠٠</span><span class="bottom">٥</span></div> = ٢٠ سم<br><br>
+                جـ) |ب د| = ٦ سم ، |أ د| = ٨ سم ، احسب |ب جـ|<br>
+                <span class="title-bold">* الحل *</span><br>
+                من مبرهنة (١) نعلم أن |أ ب| × |ب د| = |ب جـ|<sup>٢</sup> حيث<br>
+                |أ ب| = |أ د| + |ب د| = ٨ + ٦ = ١٤ سم<br>
+                |ب جـ|<sup>٢</sup> = |أ ب| × |ب د| = ١٤ × ٦ = ٨٤ سم<br>
+                ∴ |ب جـ| = √<span style="text-decoration: overline;">٨٤</span> = √<span style="text-decoration: overline;">٤ × ٢١</span> = ٢√٢١ سم<br><br>
+                د) |أ ب| = ١٨ سم ، |أ د| = ١٢ سم ، احسب |أ جـ|<br>
+                <span class="title-bold">* الحل *</span><br>
+                من مبرهنة (١) نعلم أن : |أ جـ|<sup>٢</sup> = |أ ب| × |أ د|<br>
+                |أ جـ|<sup>٢</sup> = ١٨ × ١٢ = ٢١٦ سم<br>
+                ∴ |أ جـ| = √<span style="text-decoration: overline;">٢١٦</span> = √<span style="text-decoration: overline;">٣٦ × ٦</span> = ٦√٦ سم
+            </div>
+
+            <div class="dashed-separator"></div>
+
+            <div class="math-text">
+                <span class="title-bold">|٤| أ ب جـ مثلث قائم الزاوية في أ فيه أ د ⊥ ب جـ</span><br>
+                |أ ب| = ٣ سم ، |ب د| = ١,٨ سم<br>
+                أوجد |ب جـ| ، |أ جـ| ، |جـ د| ، |أ د|<br>
+                <span class="title-bold">* الحل *</span><br>
+                |أ ب|<sup>٢</sup> = |ب جـ| × |ب د| &nbsp; من مبرهنة (١)
+            </div>
+
+            <div class="svg-drawing">
+                <svg width="200" height="120" viewBox="0 0 200 120">
+                    <path d="M 30,100 L 170,100 L 70,20 Z" fill="none" stroke="black" stroke-width="1.5"/>
+                    <line x1="70" y1="20" x2="70" y2="100" stroke="black" stroke-width="1.5"/>
+                    <polyline points="70,90 80,90 80,100" fill="none" stroke="black" stroke-width="1"/>
+                    <polyline points="65,25 75,35 85,25" fill="none" stroke="black" stroke-width="1"/>
+                    <text x="65" y="15">أ</text>
+                    <text x="20" y="110">ب</text>
+                    <text x="175" y="110">جـ</text>
+                    <text x="70" y="115">د</text>
+                    <text x="40" y="55">٣ سم</text>
+                    <text x="35" y="115">١,٨ سم</text>
+                </svg>
+            </div>
+
+            <div class="math-text">
+                <sup>٢</sup>(٣) = |ب جـ| × ١,٨ &nbsp; ∴ ٩ = |ب جـ| × ١,٨<br>
+                |ب جـ| = <div class="fraction"><span class="top">٩</span><span class="bottom">١,٨</span></div> = <div class="fraction"><span class="top">٩٠</span><span class="bottom">١٨</span></div> = ٥ سم<br>
+                |جـ د| = |ب جـ| - |ب د|<br>
+                |جـ د| = ٥ - ١,٨ = ٣,٢ سم<br>
+                |أ جـ|<sup>٢</sup> = |ب جـ|<sup>٢</sup> - |أ ب|<sup>٢</sup> ( من مبرهنة فيثاغورث )<br>
+                |أ جـ|<sup>٢</sup> = ٢٥ - ٩ = ١٦ ومنه |أ جـ| = ٤ سم<br>
+                |أ د|<sup>٢</sup> = |ب د| × |جـ د| مبرهنة (٢)<br>
+                |أ د|<sup>٢</sup> = ١,٨ × ٣,٢ = ٥,٧٦<br>
+                |أ د| = √<span style="text-decoration: overline;">٥,٧٦</span> = ٢,٤ سم
+            </div>
+
+            <div class="highlight-box">
+                <span class="title-bold">ملاحظة :</span><br>
+                كي تتأكد من صحة حلك طبق مبرهنة فيثاغورث على ∆ أ ب د ، أ جـ د
+            </div>
+
+            <div class="svg-drawing">
+                <svg width="180" height="100" viewBox="0 0 180 100">
+                    <path d="M 20,80 L 160,80 L 60,20 Z" fill="none" stroke="black" stroke-width="1.5"/>
+                    <line x1="60" y1="20" x2="60" y2="80" stroke="black" stroke-width="1.5"/>
+                    <polyline points="60,70 70,70 70,80" fill="none" stroke="black" stroke-width="1"/>
+                    <text x="50" y="95">١,٨ سم</text>
+                    <text x="100" y="95">٣,٢ سم</text>
+                    <text x="35" y="45">٣ سم</text>
+                    <text x="120" y="45">٤ سم</text>
+                    <text x="65" y="50">٢,٤ سم</text>
+                    <text x="55" y="15">أ</text>
+                    <text x="15" y="90">ب</text>
+                    <text x="165" y="90">جـ</text>
+                    <text x="60" y="90">د</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

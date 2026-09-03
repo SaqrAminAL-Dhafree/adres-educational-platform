@@ -17,15 +17,14 @@ class AccountTypeScreen extends StatelessWidget {
             children: [
               // شعار التطبيق
               Container(
-                padding: const EdgeInsets.all(16),
+                width: 90,
+                height: 90,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
+                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                 ),
-                child: Icon(
-                  Icons.menu_book_rounded,
-                  size: 64,
-                  color: Theme.of(context).colorScheme.primary,
+                child: ClipOval(
+                  child: Image.asset('assets/logo.jpg', fit: BoxFit.cover),
                 ),
               ),
               const SizedBox(height: 16),

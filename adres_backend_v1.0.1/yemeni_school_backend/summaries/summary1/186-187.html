@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة ٧٠ - المعلم المثالي</title>
+    <style>
+        body { font-family: 'Times New Roman', Times, serif; background-color: #f4f4f4; margin: 0; padding: 10px; color: #000; line-height: 1.4; }
+        .page-container { max-width: 900px; margin: auto; background: #fff; border: 2px solid #000; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .header-page { text-align: center; font-weight: bold; font-size: 1.2em; border-bottom: 2px solid #000; margin-bottom: 15px; padding-bottom: 5px; }
+        .main-content { display: flex; gap: 20px; }
+        .column { flex: 1; }
+        .right-col { order: 1; border-left: 1px solid #000; padding-left: 15px; }
+        .left-col { order: 2; }
+        .title-bold { font-weight: bold; text-decoration: underline; }
+        .math-text { margin-bottom: 12px; font-size: 1.05em; }
+        .dashed-separator { border-top: 1px dashed #000; margin: 15px 0; }
+        .svg-container { text-align: center; margin: 10px 0; }
+        .fraction { display: inline-block; vertical-align: middle; text-align: center; margin: 0 2px; }
+        .fraction .top { border-bottom: 1px solid #000; display: block; padding: 0 2px; }
+        .fraction .bottom { display: block; padding: 0 2px; }
+        .boxed-title { border: 2px solid #000; padding: 5px; text-align: center; font-weight: bold; margin: 10px 0; background: #eee; }
+
+        @media (max-width: 768px) {
+            .main-content { flex-direction: column; }
+            .right-col { border-left: none; border-bottom: 2px solid #000; padding-bottom: 15px; padding-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-container">
+    <div class="header-page">ـ ٧٠ ـ</div>
+
+    <div class="main-content">
+        <div class="column right-col">
+            <div class="math-text">
+                [١٠] إذا كان جا جـ = <div class="fraction"><span class="top">١</span><span class="bottom">٥</span></div> حيث جـ زاوية حادة<br>
+                فأوجد كلاً من : جتا جـ ، ظا جـ<br>
+                <span class="title-bold">* الحل *</span><br>
+                نعلم أن جا جـ = <div class="fraction"><span class="top">المقابل</span><span class="bottom">الوتر</span></div> في المثلث القائم فنرسمه
+            </div>
+            <div class="svg-container">
+                <svg width="140" height="100">
+                    <path d="M 40,10 L 40,80 L 110,80 Z" fill="none" stroke="black" stroke-width="1.5"/>
+                    <rect x="40" y="70" width="10" height="10" fill="none" stroke="black"/>
+                    <text x="35" y="10">أ</text> <text x="35" y="95">ب</text> <text x="115" y="95">جـ</text>
+                    <text x="10" y="50" font-size="10">مقابل ١</text> <text x="75" y="40" font-size="10" transform="rotate(-45, 75, 40)">وتر ٥</text> <text x="65" y="95" font-size="10">مجاور</text>
+                    <path d="M 100,80 Q 95,70 110,80" fill="none" stroke="black"/>
+                    <text x="95" y="75" font-size="10">جـ</text>
+                </svg>
+            </div>
+            <div class="math-text">
+                ∴ | أ جـ |<sup>٢</sup> = | أ ب |<sup>٢</sup> + | ب جـ |<sup>٢</sup><br>
+                ٢٥ = ١ + | ب جـ |<sup>٢</sup> ⇒ | ب جـ |<sup>٢</sup> = ٢٤<br>
+                ∴ | ب جـ | = √٢٤ = √٤ × ٦ = ٢√٦<br>
+                ∴ جتا جـ = <div class="fraction"><span class="top">| ب جـ |</span><span class="bottom">| أ جـ |</span></div> = <div class="fraction"><span class="top">٢√٦</span><span class="bottom">٥</span></div><br>
+                ∴ ظا جـ = <div class="fraction"><span class="top">١</span><span class="bottom">٢√٦</span></div>
+            </div>
+
+            <div class="dashed-separator"></div>
+
+            <div class="math-text">
+                [١١] ظا س = <div class="fraction"><span class="top">٧</span><span class="bottom">٣</span></div> حيث س زاوية حادة أوجد جا س ، جتا س<br>
+                <span class="title-bold">* الحل *</span><br>
+                نعلم أن ظا س = <div class="fraction"><span class="top">المقابل</span><span class="bottom">المجاور</span></div> ومنها نرسم مثلثاً قائماً
+            </div>
+            <div class="svg-container">
+                <svg width="120" height="100">
+                    <path d="M 30,10 L 30,80 L 90,80 Z" fill="none" stroke="black" stroke-width="1.5"/>
+                    <rect x="30" y="70" width="10" height="10" fill="none" stroke="black"/>
+                    <text x="95" y="95">س</text>
+                    <text x="10" y="50" font-size="10">٧</text> <text x="55" y="95" font-size="10">٣</text> <text x="60" y="40" font-size="10">وتر</text>
+                    <path d="M 80,80 Q 75,70 90,80" fill="none" stroke="black"/>
+                </svg>
+            </div>
+            <div class="math-text">
+                ∴ مربع الوتر = ٤٩ + ٩ = ٥٨<br>
+                ∴ الوتر = √٥٨<br>
+                ∴ جا س = <div class="fraction"><span class="top">٧</span><span class="bottom">√٥٨</span></div> ، جتا س = <div class="fraction"><span class="top">٣</span><span class="bottom">√٥٨</span></div>
+            </div>
+
+            <div class="dashed-separator"></div>
+
+            <div class="math-text">
+                [١٢] أ ب جـ ∆ قائم في ب فإذا كان جتا أ = <div class="fraction"><span class="top">٢</span><span class="bottom">٣</span></div><br>
+                فأوجد كلاً من جا أ ، ظا أ<br>
+                <span class="title-bold">* الحل *</span><br>
+                جتا أ = <div class="fraction"><span class="top">المجاور</span><span class="bottom">الوتر</span></div> نرسم المثلث
+            </div>
+            <div class="svg-container">
+                <svg width="120" height="100">
+                    <path d="M 30,15 L 30,85 L 90,85 Z" fill="none" stroke="black" stroke-width="1.5"/>
+                    <rect x="30" y="75" width="10" height="10" fill="none" stroke="black"/>
+                    <text x="25" y="10">أ</text> <text x="25" y="98">ب</text> <text x="95" y="98">جـ</text>
+                    <text x="15" y="55" font-size="10">٢</text> <text x="65" y="45" font-size="10" transform="rotate(-45, 65, 45)">٣</text>
+                </svg>
+            </div>
+            <div class="math-text">
+                | أ جـ |<sup>٢</sup> = | أ ب |<sup>٢</sup> + | ب جـ |<sup>٢</sup><br>
+                ٩ = ٤ + | ب جـ |<sup>٢</sup> ⇒ | ب جـ |<sup>٢</sup> = ٥<br>
+                ∴ | ب جـ | = √٥<br>
+                ∴ جا أ = <div class="fraction"><span class="top">√٥</span><span class="bottom">٣</span></div> ، ظا أ = <div class="fraction"><span class="top">√٥</span><span class="bottom">٢</span></div>
+            </div>
+
+            <div class="dashed-separator"></div>
+
+            <div class="math-text">
+                [١٣] إذا كان جتا س = ٠.٤ حيث س زاوية حادة أوجد كلاً من جا س ، ظا س<br>
+                <span class="title-bold">* الحل *</span><br>
+                جتا س = <div class="fraction"><span class="top">٤</span><span class="bottom">١٠</span></div> = <div class="fraction"><span class="top">المجاور</span><span class="bottom">الوتر</span></div> لذلك نرسم مثلثاً قائماً كما هو موضح
+            </div>
+            <div class="svg-container">
+                <svg width="140" height="110">
+                    <path d="M 40,20 L 40,90 L 110,90 Z" fill="none" stroke="black" stroke-width="1.5"/>
+                    <rect x="40" y="80" width="10" height="10" fill="none" stroke="black"/>
+                    <text x="35" y="15">ع</text> <text x="35" y="105">ص</text> <text x="115" y="105">س</text>
+                    <text x="25" y="60" font-size="10">؟</text> <text x="75" y="105" font-size="10">٤</text> <text x="80" y="50" font-size="10" transform="rotate(-45, 80, 50)">١٠</text>
+                </svg>
+            </div>
+            <div class="math-text">
+                | س ع |<sup>٢</sup> = | ع ص |<sup>٢</sup> + | س ص |<sup>٢</sup><br>
+                ١٠٠ = | ع ص |<sup>٢</sup> + ١٦ ⇒ | ع ص |<sup>٢</sup> = ٨٤<br>
+                ∴ | ع ص | = √٨٤ = ٢√٢١<br>
+                ∴ جا س = <div class="fraction"><span class="top">٢√٢١</span><span class="bottom">١٠</span></div> = <div class="fraction"><span class="top">√٢١</span><span class="bottom">٥</span></div> ، ظا س = <div class="fraction"><span class="top">٢√٢١</span><span class="bottom">٤</span></div> = <div class="fraction"><span class="top">√٢١</span><span class="bottom">٢</span></div>
+            </div>
+        </div>
+
+        <div class="column left-col">
+            <div class="math-text">
+                [١٤] إذا كان جا هـ = <div class="fraction"><span class="top">١</span><span class="bottom">√١٠</span></div> ، ٠ < هـ < ٩٠° أوجد قيمة<br>
+                <div class="fraction"><span class="top">١</span><span class="bottom">ظا هـ</span></div><br>
+                <span class="title-bold">* الحل *</span><br>
+                تعلم أن جا<sup>٢</sup> هـ + جتا<sup>٢</sup> هـ = ١ ومنها جتا<sup>٢</sup> هـ = ١ - جا<sup>٢</sup> هـ<br>
+                حيث ( <div class="fraction"><span class="top">١</span><span class="bottom">√١٠</span></div> )<sup>٢</sup> = <div class="fraction"><span class="top">١</span><span class="bottom">١٠</span></div> ومنها جتا<sup>٢</sup> هـ = ١ - <div class="fraction"><span class="top">١</span><span class="bottom">١٠</span></div> = <div class="fraction"><span class="top">٩</span><span class="bottom">١٠</span></div><br>
+                ∴ جتا هـ = ± √ <div class="fraction"><span class="top">٩</span><span class="bottom">١٠</span></div> = ± <div class="fraction"><span class="top">٣</span><span class="bottom">√١٠</span></div> وحيث هـ < ٩٠° (زاوية موجبة حادة)<br>
+                ∴ جتا هـ = + <div class="fraction"><span class="top">٣</span><span class="bottom">√١٠</span></div> #<br>
+                وحيث ظا هـ = <div class="fraction"><span class="top">جا هـ</span><span class="bottom">جتا هـ</span></div> = <div class="fraction"><span class="top">١ / √١٠</span><span class="bottom">٣ / √١٠</span></div> = <div class="fraction"><span class="top">١</span><span class="bottom">٣</span></div><br>
+                ∴ قيمة <div class="fraction"><span class="top">١</span><span class="bottom">ظا هـ</span></div> = <div class="fraction"><span class="top">١</span><span class="bottom">١ / ٣</span></div> = ٣ #
+            </div>
+
+            <div class="dashed-separator"></div>
+
+            <div class="math-text">
+                [١٥] إذا كان جا س = ٢ جتا س حيث س زاوية حادة ، فأوجد كلاً من : ظا س ، جا س ، جتا س<br>
+                <span class="title-bold">* الحل *</span><br>
+                ∵ جا س = ٢ جتا س ومنها <div class="fraction"><span class="top">جا س</span><span class="bottom">جتا س</span></div> = ٢ ومنها ظا س = ٢ #<br>
+                ∴ ظا س = <div class="fraction"><span class="top">المقابل</span><span class="bottom">المجاور</span></div> فنرسم مثلثاً قائماً
+            </div>
+            <div class="svg-container">
+                <svg width="120" height="100">
+                    <path d="M 30,10 L 30,80 L 80,80 Z" fill="none" stroke="black" stroke-width="1.5"/>
+                    <rect x="30" y="70" width="10" height="10" fill="none" stroke="black"/>
+                    <text x="85" y="95">س</text>
+                    <text x="15" y="50" font-size="10">٢</text> <text x="50" y="95" font-size="10">١</text> <text x="60" y="45" font-size="10">وتر</text>
+                </svg>
+            </div>
+            <div class="math-text">
+                ∴ مربع الوتر = ٤ + ١ = ٥<br>
+                ∴ طول الوتر = √٥<br>
+                ∴ جا س = <div class="fraction"><span class="top">٢</span><span class="bottom">√٥</span></div> ، جتا س = <div class="fraction"><span class="top">١</span><span class="bottom">√٥</span></div>
+            </div>
+
+            <div class="dashed-separator"></div>
+
+            <div class="boxed-title">( ٤ ) النسب المثلثية للزوايا ٣٠° ، ٦٠° ، ٤٥°</div>
+
+            <div class="math-text">
+                <span class="title-bold">أولاً : النسب المثلثية للزاويتين ٣٠° ، ٦٠°</span><br>
+                تعلم أن زوايا المثلث المتساوي الأضلاع متساوية وقياس كل منها ٦٠° ، كما تعلم أن العمود النازل من رأس زاوية ∆ المتساوي الأضلاع ينصف القاعدة وينصف زاوية الرأس .<br>
+                <span class="title-bold">لذلك :</span> لو فرضنا مثلثاً مثل أ ب جـ متساوي الأضلاع طول كل ضلع من أضلاعه وحدتان طول ثم أنشأنا من الرأس أ عموداً على القاعدة ب جـ ( أ د ⊥ ب جـ ) فإن :-<br>
+                | ب د | = | د جـ | = ١ وحدة كما هو موضح في الشكل ( ٤ - ٤ )
+            </div>
+            <div class="svg-container">
+                <svg width="160" height="140">
+                    <path d="M 80,10 L 20,110 L 140,110 Z" fill="none" stroke="black" stroke-width="1.5"/>
+                    <line x1="80" y1="10" x2="80" y2="110" stroke="black" stroke-width="1.2"/>
+                    <rect x="80" y="100" width="10" height="10" fill="none" stroke="black"/>
+                    <text x="75" y="10">أ</text> <text x="10" y="125">ب</text> <text x="145" y="125">جـ</text> <text x="75" y="125">د</text>
+                    <text x="35" y="60" font-size="10">٢</text> <text x="120" y="60" font-size="10">٢</text>
+                    <text x="50" y="125" font-size="10">١</text> <text x="110" y="125" font-size="10">١</text>
+                    <text x="30" y="105" font-size="9">٦٠°</text> <text x="120" y="105" font-size="9">٦٠°</text>
+                    <text x="70" y="35" font-size="9">٣٠°</text> <text x="85" y="35" font-size="9">٣٠°</text>
+                    <text x="65" y="140" font-size="11">شكل ( ٤ - ٤ )</text>
+                </svg>
+            </div>
+            <div class="math-text">
+                وبتطبيق مبرهنة فيثاغورت على ∆ ( أ جـ د ) تجد :<br>
+                | أ جـ |<sup>٢</sup> = | أ د |<sup>٢</sup> + | د جـ |<sup>٢</sup> أي أن | أ د |<sup>٢</sup> = | أ جـ |<sup>٢</sup> - | د جـ |<sup>٢</sup><br>
+                | أ د |<sup>٢</sup> = (٢)<sup>٢</sup> - (١)<sup>٢</sup> = ٣<br>
+                ومنه | أ د | = √٣ وحدة طول<br>
+                <span class="title-bold">وعليه فإن :</span><br>
+                جا ٣٠° = <div class="fraction"><span class="top">١</span><span class="bottom">٢</span></div> ، حا ٦٠° = <div class="fraction"><span class="top">√٣</span><span class="bottom">٢</span></div><br>
+                جتا ٣٠° = <div class="fraction"><span class="top">√٣</span><span class="bottom">٢</span></div> ، جتا ٦٠° = <div class="fraction"><span class="top">١</span><span class="bottom">٢</span></div><br>
+                ظا ٣٠° = <div class="fraction"><span class="top">١</span><span class="bottom">√٣</span></div> ، ظا ٦٠° = √٣
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

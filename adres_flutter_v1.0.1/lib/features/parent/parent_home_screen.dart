@@ -21,6 +21,31 @@ class _ParentHomeScreenState extends State<ParentHomeScreen> {
     super.initState();
     _parent = ParentLocalService.getParent();
     _children = ParentLocalService.getChildren();
+    // جلب البيانات المحدثة من السيرفر عند فتح الشاشة
+    _refreshFromServer();
+  }
+
+  Future<void> _refreshFromServer() async {
+    final parentId = _parent['parentId'] as String? ?? '';
+    if (parentId.isEmpty) return;
+    final updated = await ApiService.loginParent(parentId);
+    if (updated == null || !mounted) return;
+    ParentLocalService.saveParent(
+      parentId: parentId,
+      fullName: updated['full_name'] ?? _parent['fullName'] ?? '',
+    );
+    final children = updated['children'];
+    if (children is List) {
+      ParentLocalService.saveChildren(
+        children.map((c) => Map<String, dynamic>.from(c as Map)).toList(),
+      );
+    }
+    if (mounted) {
+      setState(() {
+        _parent = ParentLocalService.getParent();
+        _children = ParentLocalService.getChildren();
+      });
+    }
   }
 
   Future<void> _addChild() async {

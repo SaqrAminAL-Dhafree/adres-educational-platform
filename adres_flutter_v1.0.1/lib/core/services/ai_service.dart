@@ -18,13 +18,14 @@ class AIService {
     required String text,
     required String subject,
     required String grade,
+    String studentName = '',
   }) async {
     try {
       final res = await http
           .post(
             Uri.parse('${AppConfig.backendBaseUrl}/api/ai/explain/'),
             headers: {'Content-Type': 'application/json'},
-            body: jsonEncode({'text': text, 'subject': subject, 'grade': grade}),
+            body: jsonEncode({'text': text, 'subject': subject, 'grade': grade, 'student_name': studentName}),
           )
           .timeout(const Duration(seconds: 35));
 
@@ -33,6 +34,9 @@ class AIService {
         return data['result'] as String;
       } else {
         if (kDebugMode) debugPrint('AI error: ${res.body}');
+        if (res.statusCode == 403) {
+          return 'خدمة الذكاء الاصطناعي غير متاحة حالياً (مفتاح API منتهي أو محدود). تواصل مع المسؤول.';
+        }
         return 'حدث خطأ في الاتصال بالذكاء الاصطناعي (${res.statusCode})';
       }
     } catch (e) {
@@ -46,11 +50,12 @@ class AIService {
     String selectedText, {
     String subject = 'الرياضيات',
     String grade = 'التاسع',
+    String studentName = '',
   }) async {
     final pageContext = currentPageContent.isNotEmpty
         ? 'سياق الصفحة:\n${_extractText(currentPageContent).substring(0, _extractText(currentPageContent).length.clamp(0, 1000))}\n\nالنص المحدد:\n$selectedText'
         : selectedText;
-    return _ask(text: pageContext, subject: subject, grade: grade);
+    return _ask(text: pageContext, subject: subject, grade: grade, studentName: studentName);
   }
 
   /// شرح الصفحة الكاملة
@@ -58,9 +63,10 @@ class AIService {
     String pageHtml, {
     String subject = 'الرياضيات',
     String grade = 'التاسع',
+    String studentName = '',
   }) async {
     final text = _extractText(pageHtml);
     final truncated = text.length > 3000 ? text.substring(0, 3000) : text;
-    return _ask(text: truncated, subject: subject, grade: grade);
+    return _ask(text: truncated, subject: subject, grade: grade, studentName: studentName);
   }
 }

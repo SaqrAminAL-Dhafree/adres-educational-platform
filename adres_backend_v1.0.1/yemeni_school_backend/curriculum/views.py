@@ -1,5 +1,8 @@
 from django.http import HttpResponse, Http404
 from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.exceptions import NotFound
 
 from .models import Subject, Book, BookPage, PageSummary, PageSummaryPage
@@ -12,6 +15,36 @@ from .serializers import (
 class SubjectListAPIView(ListAPIView):
     queryset = Subject.objects.all().order_by('order')
     serializer_class = SubjectSerializer
+
+    def post(self, request):
+        """POST /api/subjects/ - إنشاء مادة جديدة"""
+        serializer = SubjectSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SubjectDetailAPIView(APIView):
+    """PUT/DELETE /api/subjects/<id>/"""
+
+    def put(self, request, pk):
+        try:
+            subject = Subject.objects.get(pk=pk)
+        except Subject.DoesNotExist:
+            return Response({'error': 'المادة غير موجودة'}, status=status.HTTP_404_NOT_FOUND)
+        serializer = SubjectSerializer(subject, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        try:
+            Subject.objects.get(pk=pk).delete()
+            return Response({'success': True})
+        except Subject.DoesNotExist:
+            return Response({'error': 'المادة غير موجودة'}, status=status.HTTP_404_NOT_FOUND)
 
 
 class BookListAPIView(ListAPIView):
@@ -73,16 +106,29 @@ def book_page_html_view(request, page_number):
         qs = qs.filter(book_id=book_id)
     page = qs.first()
     if not page:
-        raise Http404("Page not found")
+        return HttpResponse("""<html dir="rtl"><body style="display:flex;align-items:center;
+justify-content:center;height:100vh;margin:0;font-family:Cairo,Tajawal,sans-serif;background:#fafafa;">
+<div style="text-align:center;color:#888;padding:32px;">
+  <div style="font-size:48px;margin-bottom:16px;">📄</div>
+  <p style="font-size:18px;margin:0;">سيتم إضافة هذه الصفحة قريباً</p>
+</div></body></html>""")
 
     html = page.content_html
     viewport_meta = '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">'
     if '<head>' in html:
-        html = html.replace('<head>', f'<head>{viewport_meta}')
+        html = html.replace('<head>', f'<head>{viewport_meta}', 1)
     else:
         html = viewport_meta + html
     return HttpResponse(html)
 
+
+_COMING_SOON_HTML = """<script>window.totalPages=1;</script>
+<html dir="rtl"><body style="display:flex;align-items:center;justify-content:center;
+height:100vh;margin:0;font-family:Cairo,Tajawal,sans-serif;background:#fafafa;">
+<div style="text-align:center;color:#888;padding:32px;">
+  <div style="font-size:48px;margin-bottom:16px;">📚</div>
+  <p style="font-size:18px;margin:0;">سيتم إضافة هذا الملخص قريباً</p>
+</div></body></html>"""
 
 def summary_page_html_view(request):
     book_id = request.GET.get("book")
@@ -91,41 +137,31 @@ def summary_page_html_view(request):
     summary_page = request.GET.get("summary_page", 1)
 
     if not all([book_id, page_number, summary_type]):
-        raise Http404("Missing parameters")
+        return HttpResponse(_COMING_SOON_HTML)
 
     try:
         page_number = int(page_number)
         summary_type = int(summary_type)
         summary_page = int(summary_page)
+    except (ValueError, TypeError):
+        return HttpResponse(_COMING_SOON_HTML)
 
-        book_page = BookPage.objects.filter(
-            book_id=book_id, page_number=page_number
-        ).first()
-        if not book_page:
-            raise Http404("Book page not found")
+    book_page = BookPage.objects.filter(book_id=book_id, page_number=page_number).first()
+    if not book_page:
+        return HttpResponse(_COMING_SOON_HTML)
 
-        summary = PageSummary.objects.filter(
-            book_page=book_page, summary_type=summary_type
-        ).first()
-        if not summary:
-            raise Http404("Summary not found")
+    summary = PageSummary.objects.filter(book_page=book_page, summary_type=summary_type).first()
+    if not summary:
+        return HttpResponse(_COMING_SOON_HTML)
 
-        page = PageSummaryPage.objects.filter(
-            summary=summary, page_order=summary_page
-        ).first()
-        if not page:
-            raise Http404("Summary page not found")
+    page = PageSummaryPage.objects.filter(summary=summary, page_order=summary_page).first()
+    if not page:
+        return HttpResponse(_COMING_SOON_HTML)
 
-        total_pages = PageSummaryPage.objects.filter(summary=summary).count()
-    except (ValueError, TypeError) as e:
-        raise Http404(f"Invalid parameters: {e}")
-
-    has_next = summary_page < total_pages
-    has_prev = summary_page > 1
-
+    total_pages = PageSummaryPage.objects.filter(summary=summary).count()
     navigation = f"""<script>
-        window.hasNext = {str(has_next).lower()};
-        window.hasPrev = {str(has_prev).lower()};
+        window.hasNext = {str(summary_page < total_pages).lower()};
+        window.hasPrev = {str(summary_page > 1).lower()};
         window.totalPages = {total_pages};
     </script>"""
 

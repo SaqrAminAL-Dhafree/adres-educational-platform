@@ -17,12 +17,17 @@ def fill_missing_pages(summary_type=2):
     file_map = {}
 
     for file in files:
-        if not file.endswith(".html"):
+        if not file.lower().endswith(".html"):
             continue
 
-        name = file.replace(".html", "")
+        name = os.path.splitext(file)[0]
 
-        pages = [int(x) for x in name.split("-") if x.strip()]
+        try:
+            pages = [int(x.split('_')[0]) for x in name.split("-") if x.strip().split('_')[0].isdigit()]
+        except (ValueError, IndexError):
+            continue
+        if not pages:
+            continue
 
         for p in pages:
             file_map.setdefault(p, []).append(file)
@@ -35,14 +40,18 @@ def fill_missing_pages(summary_type=2):
 
         page_number = book_page.page_number
 
-        try:
-            summary = PageSummary.objects.get(
-                book_page=book_page,
-                summary_type=summary_type
-            )
-        except PageSummary.DoesNotExist:
-            print(f"❌ Missing summary object → Page {page_number}")
+        # 🔥 هل يوجد ملف له؟
+        if page_number not in file_map:
+            print(f"⚠️ No file found → Page {page_number}")
             continue
+
+        # إنشاء PageSummary إذا لم يكن موجوداً
+        summary, created_summary = PageSummary.objects.get_or_create(
+            book_page=book_page,
+            summary_type=summary_type
+        )
+        if created_summary:
+            print(f"📝 Created PageSummary → Page {page_number}")
 
         # 🔥 هل عنده صفحات ملخص؟
         if summary.pages.exists():
@@ -50,17 +59,12 @@ def fill_missing_pages(summary_type=2):
             skipped += 1
             continue
 
-        # 🔥 هل يوجد ملف له؟
-        if page_number not in file_map:
-            print(f"⚠️ No file found → Page {page_number}")
-            continue
-
         # 🔥 إضافة الصفحات
         for index, file in enumerate(file_map[page_number], start=1):
 
             path = os.path.join(folder, file)
 
-            with open(path, "r", encoding="utf-8") as f:
+            with open(path, "r", encoding="utf-8", errors="replace") as f:
                 html = f.read()
 
             PageSummaryPage.objects.create(

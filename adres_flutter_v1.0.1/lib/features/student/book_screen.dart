@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:hive/hive.dart';
 import '../../core/config/app_config.dart';
 import '../../core/services/reading_state_local_service.dart';
 import '../../core/services/progress_local_service.dart';
@@ -9,6 +10,9 @@ import '../../core/services/ai_service.dart';
 import 'dart:async';
 
 enum ViewMode { book, summary1, summary2, summary3, ai }
+
+// أسماء الملخصات
+const _summaryNames = {1: 'المثالي', 2: 'الموليجي', 3: 'ملخص 3'};
 
 class BookScreen extends StatefulWidget {
   final String subjectName;
@@ -43,14 +47,86 @@ class _BookScreenState extends State<BookScreen> {
   bool _hasNext = false;
   bool _hasPrev = false;
 
-  // ===== تتبع التقدم الحقيقي =====
-  DateTime? _pageArrivalTime;   // وقت فتح الصفحة الحالية
-  Timer? _progressTimer;        // مؤقت دوري كل 5 ثواني
-  int _sessionClicks = 0;       // نقرات الجلسة
+  DateTime? _pageArrivalTime;
+  Timer? _progressTimer;
+  int _sessionClicks = 0;
 
-  // بيانات الطالب (محفوظ للمزامنة المستقبلية)
   // ignore: unused_field
   String _studentAcademicId = '';
+  String _studentName = '';
+
+  // كاش الصفحات محلياً
+  static Box get _cacheBox => Hive.box('appBox');
+
+  String _cacheKey(int page) => 'page_${widget.bookId}_$page';
+  String _summaryCacheKey(int type, int bookPage, int summaryPage) =>
+      'summary_${widget.bookId}_t${type}_p${bookPage}_s$summaryPage';
+
+  Future<String?> _getCachedPage(int page) async {
+    return _cacheBox.get(_cacheKey(page)) as String?;
+  }
+
+  Future<void> _cachePage(int page, String html) async {
+    await _cacheBox.put(_cacheKey(page), html);
+  }
+
+  Future<String?> _getCachedSummary(int type, int bookPage, int summaryPage) async {
+    return _cacheBox.get(_summaryCacheKey(type, bookPage, summaryPage)) as String?;
+  }
+
+  Future<void> _cacheSummary(int type, int bookPage, int summaryPage, String html) async {
+    await _cacheBox.put(_summaryCacheKey(type, bookPage, summaryPage), html);
+  }
+
+  /// تحميل وحفظ كل صفحات الكتاب في الخلفية
+  Future<void> _cacheAllPages() async {
+    for (int p = 1; p <= widget.totalPages; p++) {
+      if (!mounted) return;
+      final cached = await _getCachedPage(p);
+      if (cached != null) continue;
+      try {
+        final res = await http
+            .get(Uri.parse(_pageUrl(p)))
+            .timeout(const Duration(seconds: 10));
+        if (res.statusCode == 200) await _cachePage(p, res.body);
+      } catch (_) {}
+    }
+    // بعد حفظ الكتاب، احفظ الملخصات
+    _cacheAllSummaries();
+  }
+
+  /// تحميل وحفظ كل صفحات الملخصات (المثالي=1 والوليجي=2) لكل صفحة كتاب
+  Future<void> _cacheAllSummaries() async {
+    for (final type in [1, 2]) {
+      for (int bookPage = 1; bookPage <= widget.totalPages; bookPage++) {
+        if (!mounted) return;
+        // جرب الصفحة الأولى من الملخص لمعرفة عدد الصفحات
+        int summaryPage = 1;
+        while (true) {
+          if (!mounted) return;
+          final cached = await _getCachedSummary(type, bookPage, summaryPage);
+          if (cached == null) {
+            try {
+              final url = _summaryUrl(type, summaryPage, bookPage);
+              final res = await http
+                  .get(Uri.parse(url))
+                  .timeout(const Duration(seconds: 10));
+              if (res.statusCode != 200) break;
+              await _cacheSummary(type, bookPage, summaryPage, res.body);
+            } catch (_) { break; }
+          }
+          // تحقق إذا توجد صفحة تالية
+          final html = await _getCachedSummary(type, bookPage, summaryPage);
+          if (html == null || !html.contains('totalPages')) break;
+          // استخرج totalPages من HTML بشكل بسيط
+          final match = RegExp(r'totalPages\s*=\s*(\d+)').firstMatch(html);
+          final total = int.tryParse(match?.group(1) ?? '1') ?? 1;
+          if (summaryPage >= total) break;
+          summaryPage++;
+        }
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -59,6 +135,7 @@ class _BookScreenState extends State<BookScreen> {
 
     final student = StudentLocalService.getStudent();
     _studentAcademicId = student['academicId'] ?? '';
+    _studentName = student['fullName'] ?? '';
 
     _bookController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -72,7 +149,6 @@ class _BookScreenState extends State<BookScreen> {
       ..addJavaScriptChannel(
         'FlutterInteraction',
         onMessageReceived: (_) {
-          // عدّ التفاعلات (نقرات، سحب، لمس)
           _sessionClicks++;
         },
       )
@@ -80,21 +156,18 @@ class _BookScreenState extends State<BookScreen> {
         onPageFinished: (_) async {
           _injectTextSelectionJS();
           _injectInteractionTrackingJS();
-          // حفظ محتوى الصفحة للـ RAG
-          try {
-            final res = await http.get(Uri.parse(_pageUrl(_currentPage)))
-                .timeout(const Duration(seconds: 5));
-            if (res.statusCode == 200) AIService.currentPageContent = res.body;
-          } catch (_) {}
         },
-      ))
-      ..loadRequest(Uri.parse(_pageUrl(_currentPage)));
+      ));
+
+    _loadBookPage(_currentPage);
 
     _summaryController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted);
 
     _startPageTimer();
     _recordPageOpened(_currentPage);
+    // تحميل وحفظ كل صفحات الكتاب في الخلفية
+    _cacheAllPages();
   }
 
   @override
@@ -104,19 +177,43 @@ class _BookScreenState extends State<BookScreen> {
     super.dispose();
   }
 
-  // ===== إدارة التقدم الحقيقي =====
+  // ===== كاش + تحميل الصفحة =====
 
-  /// بدء تتبع الصفحة الحالية
+  Future<void> _loadBookPage(int page) async {
+    // جرب الكاش أولاً
+    final cached = await _getCachedPage(page);
+    if (cached != null) {
+      AIService.currentPageContent = cached;
+      _bookController.loadHtmlString(cached, baseUrl: AppConfig.backendBaseUrl);
+      // loadHtmlString لا يُطلق onPageFinished دائماً، نحقن JS يدوياً
+      Future.delayed(const Duration(milliseconds: 900), () {
+        if (mounted) {
+          _injectTextSelectionJS();
+          _injectInteractionTrackingJS();
+        }
+      });
+      return;
+    }
+    // إذا لا يوجد كاش، حمّل من السيرفر وخزّن المحتوى
+    _bookController.loadRequest(Uri.parse(_pageUrl(page)));
+    http.get(Uri.parse(_pageUrl(page))).timeout(const Duration(seconds: 10)).then((res) {
+      if (res.statusCode == 200) {
+        AIService.currentPageContent = res.body;
+        _cachePage(page, res.body);
+      }
+    }).catchError((_) {});
+  }
+
+  // ===== التقدم =====
+
   void _startPageTimer() {
     _pageArrivalTime = DateTime.now();
     _progressTimer?.cancel();
-    // حفظ كل 5 ثواني بشكل دوري
     _progressTimer = Timer.periodic(const Duration(seconds: 5), (_) {
       _flushCurrentPageProgress();
     });
   }
 
-  /// تفريغ التقدم المتراكم للصفحة الحالية
   void _flushCurrentPageProgress() {
     if (_pageArrivalTime == null) return;
     final int elapsed =
@@ -127,7 +224,7 @@ class _BookScreenState extends State<BookScreen> {
         seconds: elapsed,
         totalPages: widget.totalPages,
       );
-      _pageArrivalTime = DateTime.now(); // إعادة الضبط
+      _pageArrivalTime = DateTime.now();
     }
     if (_sessionClicks > 0) {
       ProgressLocalService.addInteraction(
@@ -138,7 +235,6 @@ class _BookScreenState extends State<BookScreen> {
     }
   }
 
-  /// تسجيل أن الطالب فتح هذه الصفحة
   void _recordPageOpened(int page) {
     ProgressLocalService.recordPageOpened(
       bookId: widget.bookId,
@@ -159,17 +255,14 @@ class _BookScreenState extends State<BookScreen> {
 
   // ===== URLs =====
 
-  String _pageUrl(int page) {
-    return '${AppConfig.backendBaseUrl}/book-pages/$page/';
-  }
+  String _pageUrl(int page) =>
+      '${AppConfig.backendBaseUrl}/book-pages/$page/';
 
-  String _summaryUrl(int type, int page) {
-    return '${AppConfig.backendBaseUrl}/api/summary-html/?book=${widget.bookId}&page=$_currentPage&type=$type&summary_page=$page';
-  }
+  String _summaryUrl(int type, int summaryPage, [int? bookPage]) =>
+      '${AppConfig.backendBaseUrl}/api/summary-html/?book=${widget.bookId}&page=${bookPage ?? _currentPage}&type=$type&summary_page=$summaryPage';
 
   // ===== التنقل =====
 
-  // يقرأ window.totalPages من الـ WebView بعد تحميل الملخص
   Future<void> _updateSummaryNavigation() async {
     try {
       final result = await _summaryController.runJavaScriptReturningResult(
@@ -187,18 +280,35 @@ class _BookScreenState extends State<BookScreen> {
 
   void _loadSummary() {
     final url = _summaryUrl(_currentSummaryType, _summaryPage);
-    _summaryController
-      ..setNavigationDelegate(NavigationDelegate(
-        onPageFinished: (_) => _updateSummaryNavigation(),
-      ))
-      ..loadRequest(Uri.parse(url));
+    _summaryController.setNavigationDelegate(NavigationDelegate(
+      onPageFinished: (_) async {
+        _updateSummaryNavigation();
+        // حفظ الملخص في الكاش بعد تحميله
+        try {
+          final res = await http
+              .get(Uri.parse(url))
+              .timeout(const Duration(seconds: 10));
+          if (res.statusCode == 200) {
+            await _cacheSummary(_currentSummaryType, _currentPage, _summaryPage, res.body);
+          }
+        } catch (_) {}
+      },
+    ));
+    // جرب الكاش أولاً
+    _getCachedSummary(_currentSummaryType, _currentPage, _summaryPage).then((cached) {
+      if (cached != null) {
+        _summaryController.loadHtmlString(cached, baseUrl: AppConfig.backendBaseUrl);
+      } else {
+        _summaryController.loadRequest(Uri.parse(url));
+      }
+    });
   }
 
   void _goToNextPage() {
     if (_currentPage < widget.totalPages) {
       _flushCurrentPageProgress();
       setState(() => _currentPage++);
-      _bookController.loadRequest(Uri.parse(_pageUrl(_currentPage)));
+      _loadBookPage(_currentPage);
       _startPageTimer();
       _recordPageOpened(_currentPage);
     }
@@ -208,7 +318,7 @@ class _BookScreenState extends State<BookScreen> {
     if (_currentPage > 1) {
       _flushCurrentPageProgress();
       setState(() => _currentPage--);
-      _bookController.loadRequest(Uri.parse(_pageUrl(_currentPage)));
+      _loadBookPage(_currentPage);
       _startPageTimer();
       _recordPageOpened(_currentPage);
     }
@@ -238,51 +348,12 @@ class _BookScreenState extends State<BookScreen> {
               if (page >= 1 && page <= widget.totalPages) {
                 _flushCurrentPageProgress();
                 setState(() => _currentPage = page);
-                _bookController.loadRequest(Uri.parse(_pageUrl(page)));
+                _loadBookPage(page);
                 _startPageTimer();
                 _recordPageOpened(page);
               }
             },
             child: const Text('اذهب'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _searchTextDialog() {
-    final controller = TextEditingController();
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('بحث في الصفحة'),
-        content: TextField(
-          controller: controller,
-          autofocus: true,
-          decoration: const InputDecoration(
-            hintText: 'اكتب النص للبحث عنه',
-            prefixIcon: Icon(Icons.search),
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              _bookController.runJavaScript("window.find('');");
-            },
-            child: const Text('مسح'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              final text = controller.text.trim();
-              Navigator.pop(context);
-              if (text.isNotEmpty) {
-                _bookController.runJavaScript(
-                  "window.find(${text.replaceAll("'", "\\'").replaceAll('"', '\\"').contains("'") ? '"$text"' : "'$text'"}, false, false, true);",
-                );
-              }
-            },
-            child: const Text('بحث'),
           ),
         ],
       ),
@@ -309,7 +380,6 @@ class _BookScreenState extends State<BookScreen> {
 
   // ===== JavaScript Injection =====
 
-  /// حقن JS لتتبع التفاعلات (نقرات + سحب)
   void _injectInteractionTrackingJS() {
     Future.delayed(const Duration(milliseconds: 500), () {
       if (!mounted) return;
@@ -317,9 +387,7 @@ class _BookScreenState extends State<BookScreen> {
         (function() {
           if (window._interactionTracked) return;
           window._interactionTracked = true;
-          
-          var events = ['click', 'touchstart', 'scroll'];
-          events.forEach(function(ev) {
+          ['click','touchstart','scroll'].forEach(function(ev) {
             document.addEventListener(ev, function() {
               try { FlutterInteraction.postMessage('1'); } catch(e) {}
             }, { passive: true });
@@ -329,21 +397,19 @@ class _BookScreenState extends State<BookScreen> {
     });
   }
 
-  /// حقن JS لتحديد النص وإظهار زر "بحث مخصص AI"
+  /// حقن JS - زر AI يظهر فور تحديد النص (بدون تأخير)
   void _injectTextSelectionJS() {
-    Future.delayed(const Duration(milliseconds: 1500), () {
+    Future.delayed(const Duration(milliseconds: 800), () {
       if (!mounted) return;
       _bookController.runJavaScript(r'''
         (function() {
           if (window._aiSelectionInjected) return;
           window._aiSelectionInjected = true;
 
-          // إخفاء قائمة السياق الافتراضية
           document.addEventListener('contextmenu', function(e) { e.preventDefault(); }, true);
           document.documentElement.style.webkitUserSelect = 'text';
           document.documentElement.style.userSelect = 'text';
 
-          // إخفاء toolbar الافتراضي عبر CSS
           var style = document.createElement('style');
           style.textContent = '::selection { background: rgba(98,0,238,0.25); }';
           document.head.appendChild(style);
@@ -352,8 +418,7 @@ class _BookScreenState extends State<BookScreen> {
             var sel = window.getSelection();
             var old = document.getElementById('ai-sel-btn');
             if (old) old.remove();
-
-            if (!sel || sel.toString().trim().length < 3) return;
+            if (!sel || sel.toString().trim().length < 2) return;
 
             var text = sel.toString().trim();
             var range = sel.getRangeAt(0);
@@ -363,8 +428,8 @@ class _BookScreenState extends State<BookScreen> {
             btn.id = 'ai-sel-btn';
             btn.innerText = '\uD83E\uDD16 \u0628\u062D\u062B \u0645\u062E\u0635\u0635 AI';
             btn.style.cssText = 'position:fixed;' +
-              'top:' + Math.max(0, rect.top - 44) + 'px;' +
-              'left:' + Math.max(0, rect.left) + 'px;' +
+              'top:' + Math.max(4, rect.top - 44) + 'px;' +
+              'left:' + Math.max(4, rect.left) + 'px;' +
               'background:#6200EE;color:white;border:none;' +
               'padding:8px 16px;border-radius:20px;' +
               'font-size:14px;cursor:pointer;z-index:99999;' +
@@ -379,16 +444,17 @@ class _BookScreenState extends State<BookScreen> {
             document.body.appendChild(btn);
           }
 
-          document.addEventListener('mouseup', function(e) {
-            if (e.target && e.target.id === 'ai-sel-btn') return;
-            setTimeout(showAIButton, 50);
-          });
-          document.addEventListener('touchend', function(e) {
-            if (e.target && e.target.id === 'ai-sel-btn') return;
-            setTimeout(showAIButton, 200);
+          // selectionchange يُطلق فور اكتمال التحديد على Android/iOS
+          document.addEventListener('selectionchange', function() {
+            var sel = window.getSelection();
+            if (sel && sel.toString().trim().length >= 2) {
+              showAIButton();
+            } else {
+              var b = document.getElementById('ai-sel-btn');
+              if (b) b.remove();
+            }
           });
 
-          // إخفاء الزر عند النقر في مكان آخر
           document.addEventListener('mousedown', function(e) {
             if (!e.target || e.target.id !== 'ai-sel-btn') {
               var b = document.getElementById('ai-sel-btn');
@@ -410,16 +476,21 @@ class _BookScreenState extends State<BookScreen> {
     _showAIResult(text, isSelected: true);
   }
 
-  /// AI للصفحة الكاملة
   Future<void> _aiFullPage() async {
-    String pageHtml = '';
-    try {
-      final res = await http
-          .get(Uri.parse(_pageUrl(_currentPage)))
-          .timeout(const Duration(seconds: 10));
-      if (res.statusCode == 200) pageHtml = res.body;
-    } catch (_) {}
-
+    String pageHtml = AIService.currentPageContent;
+    if (pageHtml.isEmpty) {
+      try {
+        final cached = await _getCachedPage(_currentPage);
+        if (cached != null) {
+          pageHtml = cached;
+        } else {
+          final res = await http
+              .get(Uri.parse(_pageUrl(_currentPage)))
+              .timeout(const Duration(seconds: 10));
+          if (res.statusCode == 200) pageHtml = res.body;
+        }
+      } catch (_) {}
+    }
     if (!mounted) return;
     _showAIResult(
       pageHtml.isNotEmpty ? pageHtml : 'محتوى الصفحة $_currentPage',
@@ -436,6 +507,7 @@ class _BookScreenState extends State<BookScreen> {
         text: text,
         isSelected: isSelected,
         subject: widget.subjectName,
+        studentName: _studentName,
       ),
     );
   }
@@ -451,17 +523,19 @@ class _BookScreenState extends State<BookScreen> {
             Text('اختر نوع المساعدة',
                 style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _HelpOption('ملخص 1', () => _selectMode(ViewMode.summary1)),
-                _HelpOption('ملخص 2', () => _selectMode(ViewMode.summary2)),
-                _HelpOption('ملخص 3', () => _selectMode(ViewMode.summary3)),
-                _HelpOption('AI', () {
-                  Navigator.pop(context);
-                  _aiFullPage();
-                }, icon: Icons.psychology),
-              ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  _HelpOption(_summaryNames[1]!, () => _selectMode(ViewMode.summary1)),
+                  _HelpOption(_summaryNames[2]!, () => _selectMode(ViewMode.summary2)),
+                  _HelpOption(_summaryNames[3]!, () => _selectMode(ViewMode.summary3)),
+                  _HelpOption('AI', () {
+                    Navigator.pop(context);
+                    _aiFullPage();
+                  }, icon: Icons.psychology),
+                ],
+              ),
             ),
           ],
         ),
@@ -489,12 +563,19 @@ class _BookScreenState extends State<BookScreen> {
               child: Row(
                 children: [
                   TextButton.icon(
-                    onPressed: () {
-                      setState(() => _currentMode = ViewMode.book);
-                    },
+                    onPressed: () => setState(() => _currentMode = ViewMode.book),
                     icon: const Icon(Icons.arrow_back),
                     label: const Text('العودة إلى الكتاب'),
                   ),
+                  if (_currentMode != ViewMode.ai)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: Text(
+                        _summaryNames[_currentSummaryType] ?? '',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.deepPurple),
+                      ),
+                    ),
                 ],
               ),
             ),
@@ -532,8 +613,7 @@ class _BookScreenState extends State<BookScreen> {
                       Expanded(
                         child: Text(
                           'حدد أي نص للشرح بالذكاء الاصطناعي، أو اضغط 💡 لأدوات المساعدة',
-                          style:
-                              TextStyle(color: Colors.white, fontSize: 12),
+                          style: TextStyle(color: Colors.white, fontSize: 12),
                         ),
                       ),
                     ],
@@ -550,26 +630,25 @@ class _BookScreenState extends State<BookScreen> {
   }
 
   Widget _buildNavigationBar() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final iconColor = isDark ? Colors.white : Colors.black;
     return SafeArea(
       top: false,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 6)],
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6)],
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
               children: [
-                // زر الصفحة السابقة
                 IconButton(
-                  icon: const Icon(Icons.chevron_left),
+                  icon: Icon(Icons.chevron_left, color: iconColor),
                   onPressed: _currentPage > 1 ? _goToPreviousPage : null,
                 ),
-
-                // رقم الصفحة (اضغط للذهاب لصفحة)
                 Expanded(
                   child: Center(
                     child: GestureDetector(
@@ -582,32 +661,19 @@ class _BookScreenState extends State<BookScreen> {
                     ),
                   ),
                 ),
-
-                // زر الذهاب لصفحة محددة
                 IconButton(
-                  icon: const Icon(Icons.find_in_page),
+                  icon: Icon(Icons.find_in_page, color: iconColor),
                   tooltip: 'اذهب إلى صفحة',
                   onPressed: _goToPageDialog,
                 ),
-
-                // زر البحث بنص
+                // ===== زر المصباح فقط (حُذف زر البحث) =====
                 IconButton(
-                  icon: const Icon(Icons.search),
-                  tooltip: 'بحث في الصفحة',
-                  onPressed: _searchTextDialog,
-                ),
-
-                // ===== زر المصباح (الأدوات + AI للصفحة) =====
-                // هذا هو الزر الوحيد - يفتح قائمة: ملخص 1, 2, 3 + AI
-                IconButton(
-                  icon: const Icon(Icons.lightbulb_outline),
+                  icon: Icon(Icons.lightbulb_outline, color: iconColor),
                   tooltip: 'أدوات المساعدة',
                   onPressed: _showHelpOptions,
                 ),
-
-                // زر الصفحة التالية
                 IconButton(
-                  icon: const Icon(Icons.chevron_right),
+                  icon: Icon(Icons.chevron_right, color: iconColor),
                   onPressed:
                       _currentPage < widget.totalPages ? _goToNextPage : null,
                 ),
@@ -644,7 +710,7 @@ class _BookScreenState extends State<BookScreen> {
                 )
               else
                 const SizedBox(width: 48),
-              Text('صفحة الملخص $_summaryPage'),
+              Text('صفحة $_summaryPage'),
               if (_hasNext)
                 IconButton(
                   icon: const Icon(Icons.chevron_right),
@@ -668,11 +734,13 @@ class _AIResultSheet extends StatefulWidget {
   final String text;
   final bool isSelected;
   final String subject;
+  final String studentName;
 
   const _AIResultSheet({
     required this.text,
     required this.isSelected,
     this.subject = 'الرياضيات',
+    this.studentName = '',
   });
 
   @override
@@ -692,8 +760,8 @@ class _AIResultSheetState extends State<_AIResultSheet> {
   Future<void> _fetchAIResult() async {
     setState(() => _loading = true);
     final result = widget.isSelected
-        ? await AIService.explainText(widget.text, subject: widget.subject)
-        : await AIService.explainFullPage(widget.text, subject: widget.subject);
+        ? await AIService.explainText(widget.text, subject: widget.subject, studentName: widget.studentName)
+        : await AIService.explainFullPage(widget.text, subject: widget.subject, studentName: widget.studentName);
     if (mounted) {
       setState(() {
         _result = result;
@@ -712,7 +780,6 @@ class _AIResultSheetState extends State<_AIResultSheet> {
       ),
       child: Column(
         children: [
-          // رأس الشيت
           Container(
             padding: const EdgeInsets.all(16),
             decoration: const BoxDecoration(
@@ -741,8 +808,6 @@ class _AIResultSheetState extends State<_AIResultSheet> {
               ],
             ),
           ),
-
-          // النص المحدد
           if (widget.isSelected && widget.text.isNotEmpty)
             Container(
               margin: const EdgeInsets.all(12),
@@ -768,8 +833,6 @@ class _AIResultSheetState extends State<_AIResultSheet> {
                 ],
               ),
             ),
-
-          // النتيجة
           Expanded(
             child: _loading
                 ? const Center(
@@ -790,14 +853,13 @@ class _AIResultSheetState extends State<_AIResultSheet> {
                     ),
                   ),
           ),
-
           if (!_loading)
             Padding(
               padding: const EdgeInsets.all(12),
               child: ElevatedButton.icon(
                 onPressed: _fetchAIResult,
                 icon: const Icon(Icons.refresh),
-                label: const Text('إعادة المحاولة'),
+                label: Text(_result != null ? 'شرح آخر' : 'إعادة المحاولة'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF6200EE),
                   foregroundColor: Colors.white,

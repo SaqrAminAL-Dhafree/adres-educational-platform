@@ -7,11 +7,14 @@ class TeacherStudentReportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final progress = (student['progress_percent'] as num?)?.toDouble() ?? 0.0;
+    // دعم كلا الحقلين: progress_percent (0-1) أو avg_progress (0-100)
+    double progress = (student['progress_percent'] as num?)?.toDouble() ?? 0.0;
+    if (progress > 1.0) progress = progress / 100.0; // تحويل من نسبة مئوية
     final pct = (progress * 100).round();
-    final totalMinutes = student['total_time_minutes'] as int? ?? 0;
+    final totalMinutes = (student['total_time_minutes'] as num?)?.toInt() ?? 0;
     final hours = totalMinutes ~/ 60;
     final minutes = totalMinutes % 60;
+    final booksProgress = student['books_progress'] as List? ?? [];
 
     return Scaffold(
       appBar: AppBar(
@@ -43,6 +46,9 @@ class TeacherStudentReportScreen extends StatelessWidget {
                           const SizedBox(height: 4),
                           Text('الرقم الأكاديمي: ${student['academic_id'] ?? ''}',
                               style: Theme.of(context).textTheme.bodySmall),
+                          if ((student['grade_level'] ?? '').toString().isNotEmpty)
+                            Text('الصف: ${student['grade_level']}',
+                                style: Theme.of(context).textTheme.bodySmall),
                         ],
                       ),
                     ),
@@ -54,8 +60,7 @@ class TeacherStudentReportScreen extends StatelessWidget {
             const SizedBox(height: 16),
 
             // ملخص التقدم
-            Text('ملخص التقدم',
-                style: Theme.of(context).textTheme.titleMedium),
+            Text('ملخص التقدم', style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
             Card(
               child: Padding(
@@ -66,7 +71,7 @@ class TeacherStudentReportScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('نسبة الإنجاز'),
+                        const Text('نسبة الإنجاز'),
                         Text('$pct٪',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
@@ -91,11 +96,50 @@ class TeacherStudentReportScreen extends StatelessWidget {
               ),
             ),
 
+            // تقدم الكتب التفصيلي (إن وُجد)
+            if (booksProgress.isNotEmpty) ...[
+              const SizedBox(height: 16),
+              Text('تقدم الكتب', style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: 8),
+              ...booksProgress.map((bp) {
+                final b = bp as Map;
+                double bPct = (b['progress_percent'] as num?)?.toDouble() ?? 0.0;
+                if (bPct > 1.0) bPct = bPct / 100.0;
+                final bPctInt = (bPct * 100).round();
+                return Card(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(b['book_title']?.toString() ?? 'كتاب',
+                                style: const TextStyle(fontWeight: FontWeight.w600)),
+                            Text('$bPctInt٪',
+                                style: TextStyle(
+                                    color: bPct >= 0.7 ? Colors.green : Colors.orange)),
+                          ],
+                        ),
+                        const SizedBox(height: 6),
+                        LinearProgressIndicator(
+                          value: bPct,
+                          minHeight: 5,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
+            ],
+
             const SizedBox(height: 16),
 
             // وقت الدراسة
-            Text('وقت المذاكرة',
-                style: Theme.of(context).textTheme.titleMedium),
+            Text('وقت المذاكرة', style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
             Card(
               child: ListTile(
@@ -112,13 +156,11 @@ class TeacherStudentReportScreen extends StatelessWidget {
             const SizedBox(height: 16),
 
             // آخر نشاط
-            Text('آخر نشاط',
-                style: Theme.of(context).textTheme.titleMedium),
+            Text('آخر نشاط', style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
             Card(
               child: ListTile(
-                leading:
-                    const Icon(Icons.access_time, color: Colors.orange),
+                leading: const Icon(Icons.access_time, color: Colors.orange),
                 title: Text(student['last_activity'] as String? ?? 'غير محدد'),
                 subtitle: const Text('آخر دخول'),
               ),
@@ -126,7 +168,7 @@ class TeacherStudentReportScreen extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-            // ملاحظة
+            // التقييم
             Text('التقييم', style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
             Card(

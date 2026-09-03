@@ -54,15 +54,14 @@ class _SplashScreenState extends State<SplashScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(20),
+                      width: 110,
+                      height: 110,
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.2),
                         shape: BoxShape.circle,
+                        color: Colors.white.withValues(alpha: 0.2),
                       ),
-                      child: const Icon(
-                        Icons.menu_book_rounded,
-                        size: 90,
-                        color: Colors.white,
+                      child: ClipOval(
+                        child: Image.asset('assets/logo.jpg', fit: BoxFit.cover),
                       ),
                     ),
                     const SizedBox(height: 24),
@@ -77,7 +76,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      'المنصة التعليمية اليمنية',
+                      'مرحبا بك في تطبيق ادرس',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.white70,

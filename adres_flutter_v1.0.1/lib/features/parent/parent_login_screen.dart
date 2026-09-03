@@ -44,12 +44,12 @@ class _ParentLoginScreenState extends State<ParentLoginScreen> {
         fullName: parent['full_name'] ?? 'ولي الأمر',
       );
 
-      // حفظ الأبناء إذا كانوا موجودين
+      // حفظ الأبناء من الباك اند (يستبدل القائمة المحلية بالبيانات الحديثة)
       final children = parent['children'];
-      if (children is List) {
-        for (final child in children) {
-          ParentLocalService.addChild(Map<String, dynamic>.from(child as Map));
-        }
+      if (children is List && children.isNotEmpty) {
+        ParentLocalService.saveChildren(
+          children.map((c) => Map<String, dynamic>.from(c as Map)).toList(),
+        );
       }
 
       Navigator.pushReplacement(

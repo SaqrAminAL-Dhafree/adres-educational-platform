@@ -24,10 +24,12 @@ class _ParentDashboardScreenState extends State<ParentDashboardScreen> {
     setState(() => _loading = true);
     final id = widget.child['academic_id'] as String? ?? '';
     final data = await ApiService.getStudentAllProgress(id);
-    if (mounted) setState(() {
-      _progressList = data;
-      _loading = false;
-    });
+    if (mounted) {
+      setState(() {
+        _progressList = data;
+        _loading = false;
+      });
+    }
   }
 
   double _getOverallProgress() {

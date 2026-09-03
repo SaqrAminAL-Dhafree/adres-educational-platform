@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حل تمارين الرياضيات - الصف التاسع</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 10px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border: 2px solid #000;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2, h3 {
+            background-color: #eee;
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        .section {
+            border-bottom: 2px dashed #888;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .column {
+            flex: 1;
+            min-width: 300px;
+        }
+        .exercise {
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .solution {
+            color: #000;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            text-align: center;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 5px;
+        }
+        .geometry-box {
+            text-align: center;
+            margin: 10px 0;
+        }
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+        @media (max-width: 600px) {
+            .column {
+                flex: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="text-align: center; border-bottom: 1px solid #000; margin-bottom: 10px;">— ٧٢ —</div>
+
+    <div class="flex-container">
+        <div class="column">
+            <h2>٤ : ٣ حل تمارين ومسائل الكتاب المدرسي ص١٨٧<br>على النسب المثلثية للزوايا ٣٠°، ٦٠°، ٤٥°</h2>
+            
+            <div class="exercise">
+                <strong>[١] أوجد قيمة كل مما يلي :</strong><br>
+                أ) جتا ٤٥° جتا ٤٥° ، ب) جا ٣٠° جتا ٦٠° + جتا ٣٠° جا ٦٠°<br>
+                جـ) ٣ ظا² ٣٠° + جا ٣٠° ، د) جتا² ٦٠° جا² ٦٠°<br>
+                هـ) \( \frac{1 - \text{ظا } ٦٠^\circ}{1 + \text{ظا } ٤٥^\circ} \)
+            </div>
+
+            <div class="solution">
+                * الحل *<br>
+                أ) \( \frac{1}{\sqrt{2}} \times \frac{1}{\sqrt{2}} = \frac{1}{2} \)<br><br>
+                ب) \( \frac{1}{2} \times \frac{1}{2} + \frac{\sqrt{3}}{2} \times \frac{\sqrt{3}}{2} = \frac{1}{4} + \frac{3}{4} = \frac{4}{4} = 1 \)<br><br>
+                جـ) \( 3 \times (\frac{1}{\sqrt{3}})^2 + \frac{1}{2} = 3 \times \frac{1}{3} + \frac{1}{2} = 1 + \frac{1}{2} = 1.5 \)<br><br>
+                د) \( (\frac{1}{2})^2 \times (\frac{\sqrt{3}}{2})^2 = \frac{1}{4} \times \frac{3}{4} = \frac{3}{16} \)<br><br>
+                هـ) \( \frac{1 - \sqrt{3}}{1 + (1)} = \frac{1 - \sqrt{3}}{2} \)
+            </div>
+
+            <hr>
+
+            <div class="exercise">
+                <strong>[٢] أثبت أن :</strong> \( \frac{1}{1 + \text{جا } ٣٠^\circ} + \frac{1}{1 - \text{جا } ٣٠^\circ} = \frac{2}{\text{جتا}^2 ٣٠^\circ} \)
+            </div>
+            <div class="solution">
+                * الحل *<br>
+                الطرف الأيمن = \( \frac{1}{1 + \frac{1}{2}} + \frac{1}{1 - \frac{1}{2}} = \frac{1}{\frac{3}{2}} + \frac{1}{\frac{1}{2}} = \frac{2}{3} + 2 = \frac{2+6}{3} = \frac{8}{3} \) (١)<br>
+                الطرف الأيسر = \( \frac{2}{(\frac{\sqrt{3}}{2})^2} = \frac{2}{\frac{3}{4}} = \frac{8}{3} \) (٢)<br>
+                من (١)، (٢) الطرفان متساويان #
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="exercise">
+                <strong>[٥] أثبت أن جا ٢س = \( \frac{2 \text{ ظا س}}{1 + \text{ ظا}^2 \text{ س}} \)، حيث ق(س) = ٣٠°</strong>
+            </div>
+            <div class="solution">
+                * الحل *<br>
+                الطرف الأيمن = جا ٢س = جا ٢ × ٣٠° = جا ٦٠° = \( \frac{\sqrt{3}}{2} \) --(١)<br>
+                الطرف الأيسر = \( \frac{2 \text{ ظا } ٣٠^\circ}{1 + \text{ ظا}^2 ٣٠^\circ} = \frac{2 \times \frac{1}{\sqrt{3}}}{1 + (\frac{1}{\sqrt{3}})^2} = \frac{\frac{2}{\sqrt{3}}}{1 + \frac{1}{3}} = \frac{\frac{2}{\sqrt{3}}}{\frac{4}{3}} \)<br>
+                الطرف الأيسر = \( \frac{2}{\sqrt{3}} \times \frac{3}{4} = \frac{3}{2\sqrt{3}} \)<br>
+                بإنطاق المقام: \( \frac{3}{2\sqrt{3}} \times \frac{\sqrt{3}}{\sqrt{3}} = \frac{3\sqrt{3}}{2 \times 3} = \frac{\sqrt{3}}{2} \) --(٢)<br>
+                من (١)، (٢) الطرفان متساويان #
+            </div>
+
+            <hr>
+
+            <h2>٤ : ٤ حل تمارين عامة ومسائل الكتاب المدرسي ص ١٨٧ - ١٩١</h2>
+
+            <div class="exercise">
+                <strong>[١] أ ب جـ مثلث قائم الزاوية في ب فيه كب ⊥ أجـ. فإذا كان | أجـ | = ١٥سم ، | أ ك | = ٣سم ، فأوجد | ب ك | ، | أ ب |</strong>
+            </div>
+            <div class="geometry-box">
+                <svg width="200" height="150">
+                    <path d="M 20 130 L 180 130 L 20 20 Z" fill="none" stroke="black" stroke-width="2"/>
+                    <line x1="20" y1="130" x2="60" y2="90" stroke="black" stroke-width="2"/>
+                    <text x="10" y="140">أ</text>
+                    <text x="185" y="140">جـ</text>
+                    <text x="10" y="20">ب</text>
+                    <text x="65" y="85">ك</text>
+                    <text x="90" y="145">١٥سم</text>
+                    <text x="30" y="80">٣سم</text>
+                </svg>
+            </div>
+            <div class="solution">
+                * الحل *<br>
+                | ك جـ | = | أ جـ | - | أ ك | = ١٥ - ٣ = ١٢ سم<br>
+                | ب ك |² = | أ ك | × | ك جـ | (مبرهنة)<br>
+                | ب ك |² = ٣ × ١٢ = ٣٦ <br>
+                ∴ | ب ك | = ٦ سم<br>
+                | أ ب |² = | أ ك |² + | ب ك |² = ٩ + ٣٦ = ٤٥ سم²<br>
+                ∴ | أ ب | = \( \sqrt{45} = 3\sqrt{5} \) سم
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="section">
+        <strong>[٢] ص س ع مثلث قائم الزاوية في ص.. أكمل الجدول ثم قارن النتائج.. ماذا تلاحظ؟</strong>
+        <div class="geometry-box">
+            <svg width="150" height="100">
+                <path d="M 20 80 L 130 80 L 20 20 Z" fill="none" stroke="black" stroke-width="2"/>
+                <rect x="20" y="70" width="10" height="10" fill="none" stroke="black"/>
+                <text x="10" y="90">ص</text>
+                <text x="135" y="90">ع</text>
+                <text x="10" y="20">س</text>
+            </svg>
+        </div>
+        <table>
+            <tr>
+                <th>س ص</th>
+                <th>ص ع</th>
+                <th>س ع</th>
+                <th>| س ص |²</th>
+                <th>| ص ع |²</th>
+                <th>| س ص |² + | ص ع |²</th>
+                <th>| س ع |²</th>
+            </tr>
+            <tr>
+                <td>٥</td>
+                <td>١٢</td>
+                <td>١٣</td>
+                <td>٢٥</td>
+                <td>١٤٤</td>
+                <td>١٦٩</td>
+                <td>١٦٩</td>
+            </tr>
+            <tr>
+                <td>٨</td>
+                <td>١٥</td>
+                <td>١٧</td>
+                <td>٦٤</td>
+                <td>٢٢٥</td>
+                <td>٢٨٩</td>
+                <td>٢٨٩</td>
+            </tr>
+            <tr>
+                <td>٧</td>
+                <td>٢٤</td>
+                <td>٢٥</td>
+                <td>٤٩</td>
+                <td>٥٧٦</td>
+                <td>٦٢٥</td>
+                <td>٦٢٥</td>
+            </tr>
+            <tr>
+                <td>١٢</td>
+                <td>١٦</td>
+                <td>٢٠</td>
+                <td>١٤٤</td>
+                <td>٢٥٦</td>
+                <td>٤٠٠</td>
+                <td>٤٠٠</td>
+            </tr>
+            <tr>
+                <td>٤</td>
+                <td>٧.٥</td>
+                <td>٨.٥</td>
+                <td>١٦</td>
+                <td>٥٦.٢٥</td>
+                <td>٧٢.٢٥</td>
+                <td>٧٢.٢٥</td>
+            </tr>
+        </table>
+        <p><strong>نلاحظ من العمودين الأخيرين تحقق مبرهنة فيثاغورث.</strong></p>
+    </div>
+</div>
+
+</body>
+</html>

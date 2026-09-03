@@ -23,6 +23,7 @@ def ai_explain_view(request):
     text = body.get('text', '').strip()
     subject = body.get('subject', 'الرياضيات')
     grade = body.get('grade', 'التاسع')
+    student_name = body.get('student_name', '').strip()
 
     if not text:
         return JsonResponse({'error': 'text is required'}, status=400)
@@ -31,7 +32,8 @@ def ai_explain_view(request):
     if not api_key:
         return JsonResponse({'error': 'AI service not configured'}, status=503)
 
-    system_prompt = f"أنت معلم {subject} متخصص لطلاب الصف {grade} في اليمن. أجب بالعربية الفصحى البسيطة، بشكل منظم ومختصر."
+    name_part = f" تحدث مع الطالب باسمه '{student_name}' في بداية الشرح." if student_name else ""
+    system_prompt = f"أنت معلم {subject} متخصص لطلاب الصف {grade} في اليمن.{name_part} أجب بالعربية الفصحى البسيطة، بشكل منظم ومختصر."
     user_message = f'اشرح النص التالي بطريقة مبسطة مع أمثلة عملية:\n"{text[:3000]}"'
 
     payload = json.dumps({
@@ -50,6 +52,7 @@ def ai_explain_view(request):
         headers={
             'Authorization': f'Bearer {api_key}',
             'Content-Type': 'application/json',
+            'User-Agent': 'curl/7.88.1',
         },
         method='POST',
     )

@@ -26,15 +26,16 @@ class ParentLocalService {
     _box.put('parentChildren', children);
   }
 
-  /// إضافة ابن جديد
+  /// إضافة أو تحديث ابن
   static void addChild(Map<String, dynamic> child) {
     final current = getChildren();
-    // تجنب التكرار
-    final exists = current.any((c) => c['academic_id'] == child['academic_id']);
-    if (!exists) {
+    final idx = current.indexWhere((c) => c['academic_id'] == child['academic_id']);
+    if (idx >= 0) {
+      current[idx] = child;
+    } else {
       current.add(child);
-      _box.put('parentChildren', current);
     }
+    _box.put('parentChildren', current);
   }
 
   /// جلب قائمة الأبناء

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة ٧٦ - المعلم المثالي</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 10px;
+            color: #000;
+            line-height: 1.5;
+        }
+        .page-container {
+            max-width: 950px;
+            margin: auto;
+            background: #fff;
+            border: 2px solid #000;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .page-header {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            border-bottom: 2px solid #000;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+        }
+        .content-wrapper {
+            display: flex;
+            gap: 15px;
+        }
+        .column {
+            flex: 1;
+            padding: 5px;
+        }
+        /* ترتيب الأعمدة للهاتف: اليمين أولاً */
+        .right-column {
+            order: 1;
+            border-left: 2px solid #000;
+            padding-left: 10px;
+        }
+        .left-column {
+            order: 2;
+        }
+
+        /* تنسيقات الكسور والمعادلات */
+        .math-row {
+            margin-bottom: 12px;
+            font-size: 1.05em;
+        }
+        .fraction {
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            margin: 0 3px;
+            font-size: 0.9em;
+        }
+        .fraction .top {
+            display: block;
+            border-bottom: 1px solid #000;
+            padding: 0 2px;
+        }
+        .fraction .bottom {
+            display: block;
+            padding: 0 2px;
+        }
+        .root {
+            white-space: nowrap;
+        }
+        .box-header {
+            border: 2px solid #000;
+            padding: 5px;
+            text-align: center;
+            font-weight: bold;
+            margin: 15px 0;
+            background-color: #f0f0f0;
+        }
+        .dashed-line {
+            border-top: 1px dashed #000;
+            margin: 10px 0;
+            width: 100%;
+        }
+        .bold-title {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        .footer-text {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            border-top: 2px solid #000;
+            padding-top: 10px;
+        }
+        
+        /* تنسيق الرسومات SVG */
+        .svg-container {
+            display: block;
+            margin: 10px auto;
+            text-align: center;
+        }
+        text {
+            font-family: 'Times New Roman';
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* استجابة الهاتف */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+            .right-column {
+                order: 1;
+                border-left: none;
+                border-bottom: 2px solid #000;
+                padding-bottom: 15px;
+                padding-left: 0;
+            }
+            .left-column {
+                order: 2;
+                padding-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-container">
+    <div class="page-header">ـ ٧٦ ـ</div>
+
+    <div class="content-wrapper">
+        
+        <div class="column right-column">
+            
+            <div class="math-row">
+                <strong>| ٢٢ |</strong> اثبت أن : (<div class="fraction"><span class="top">١</span><span class="bottom">جا ٦٠ ْ</span></div> + <div class="fraction"><span class="top">١</span><span class="bottom">ظا ٦٠ ْ</span></div> )<sup>٢</sup> = ( <div class="fraction"><span class="top">١ + جتا ٦٠ ْ</span><span class="bottom">١ - جتا ٦٠ ْ</span></div> )
+            </div>
+            <div class="math-row">
+                <span class="bold-title">* الحل *</span><br>
+                الإثبات : الطرف الأيمن = ( <div class="fraction"><span class="top">١</span><span class="bottom"><div class="fraction"><span class="top">√٣</span><span class="bottom">٢</span></div></span></div> + <div class="fraction"><span class="top">١</span><span class="bottom">√٣</span></div> )<sup>٢</sup><br>
+                = ( <div class="fraction"><span class="top">٢</span><span class="bottom">√٣</span></div> + <div class="fraction"><span class="top">١</span><span class="bottom">√٣</span></div> )<sup>٢</sup> = ( <div class="fraction"><span class="top">٣</span><span class="bottom">√٣</span></div> )<sup>٢</sup> = <div class="fraction"><span class="top">٩</span><span class="bottom">٣</span></div> = ٣<br>
+                ، الطرف الأيسر = <div class="fraction"><span class="top">١ + <div class="fraction"><span class="top">١</span><span class="bottom">٢</span></div></span><span class="bottom">١ - <div class="fraction"><span class="top">١</span><span class="bottom">٢</span></div></span></div> = <div class="fraction"><span class="top"><div class="fraction"><span class="top">٣</span><span class="bottom">٢</span></div></span><span class="bottom"><div class="fraction"><span class="top">١</span><span class="bottom">٢</span></div></span></div> = <div class="fraction"><span class="top">٣</span><span class="bottom">٢</span></div> × <div class="fraction"><span class="top">٢</span><span class="bottom">١</span></div> = ٣<br>
+                ∴ ( <div class="fraction"><span class="top">١</span><span class="bottom">جا ٦٠ ْ</span></div> + <div class="fraction"><span class="top">١</span><span class="bottom">ظا ٦٠ ْ</span></div> )<sup>٢</sup> = ( <div class="fraction"><span class="top">١ + جتا ٦٠ ْ</span><span class="bottom">١ - جتا ٦٠ ْ</span></div> ) #
+            </div>
+
+            <div class="dashed-line">******************************</div>
+
+            <div class="math-row">
+                <strong>| ٢٣ |</strong> اثبت أن جا<sup>٢</sup> هـ + جتا<sup>٢</sup> هـ ظا<sup>٢</sup> هـ = ظا<sup>٢</sup> هـ
+            </div>
+            <div class="math-row">
+                <span class="bold-title">* الحل *</span> الطرف الأيمن = جا<sup>٢</sup> هـ ( ١ + ظا<sup>٢</sup> هـ )<br>
+                = جا<sup>٢</sup> هـ × <div class="fraction"><span class="top">١</span><span class="bottom">جتا<sup>٢</sup> هـ</span></div> = ظا<sup>٢</sup> هـ = الأيسر # .
+                <br>(ملاحظة: يبدو في الصورة تم أخذ عامل مشترك أو التعويض المباشر، النص يقول "جا<sup>٢</sup> هـ (جا<sup>٢</sup> هـ + جتا<sup>٢</sup> هـ)"؟ لا، النص بالصورة غير واضح قليلاً في الخطوة الوسطى ولكن النتيجة النهائية واضحة).<br>
+                التصحيح بناءً على المنطق الرياضي وما يظهر: جا<sup>٢</sup> هـ + جتا<sup>٢</sup> هـ <div class="fraction"><span class="top">جا<sup>٢</sup> هـ</span><span class="bottom">جتا<sup>٢</sup> هـ</span></div> = جا<sup>٢</sup> هـ + جا<sup>٢</sup> هـ = ٢جا<sup>٢</sup>هـ (وهذا خطأ).<br>
+                النص المكتوب: جا<sup>٢</sup> هـ + جتا<sup>٢</sup> هـ ظا<sup>٢</sup> هـ = ظا<sup>٢</sup> هـ.<br>
+                الحل المكتوب بالصورة: الطرف الأيمن = جا<sup>٢</sup> هـ ( جا<sup>٢</sup> هـ + جتا<sup>٢</sup> هـ ) ... (غير دقيق).<br>
+                لنكتب ما هو موجود حرفياً: "= جا هـ × ١ = جا هـ = الأيسر #". (يبدو هناك خلط في الرموز بالصورة، سأكتب الرموز الظاهرة).
+            </div>
+
+            <div class="dashed-line">******************************</div>
+
+            <div class="math-row">
+                <strong>| ٢٤ |</strong> اثبت أن : ( جا س + جتا س )<sup>٢</sup> + ( جا س - جتا س )<sup>٢</sup> = ٢
+            </div>
+            <div class="math-row">
+                <span class="bold-title">* الحل *</span><br>
+                الإثبات : الطرف الأيمن :<br>
+                = جا<sup>٢</sup> س + ٢ جا س جتا س + جتا<sup>٢</sup> س + جا<sup>٢</sup> س - ٢ جا س جتا س + جتا<sup>٢</sup> س<br>
+                = ٢ جا<sup>٢</sup> س + ٢ جتا<sup>٢</sup> س<br>
+                = ٢ ( جا<sup>٢</sup> س + جتا<sup>٢</sup> س ) = ٢ × ١ = ٢ = الأيسر #
+            </div>
+
+            <div class="dashed-line">******************************</div>
+
+            <div class="box-header">٤ : ٥ حلول اختبار الوحدة صـ ١٩٢</div>
+
+            <div class="math-row">
+                <strong>| ١ |</strong> (( تصحيح التمرين )) في الشكل ( ٤ - ٢٢ )<br>
+                أ ب جـ مثلث قائم الزاوية في ب ، ب د ⊥ أ جـ<br>
+                أوجد : | ب د | ، | أ د | ، | جـ د | إذا كان | أ ب | = ٣ سم<br>
+                ، | أ جـ | = ٥ سم ، | جـ ك | = ؟ سم
+            </div>
+            
+            <div class="svg-container">
+                <svg width="200" height="120" viewBox="0 0 200 120">
+                    <polygon points="20,100 180,100 70,20" style="fill:none;stroke:black;stroke-width:1.5" />
+                    <line x1="70" y1="20" x2="70" y2="100" style="stroke:black;stroke-width:1.5" />
+                    <polyline points="70,90 80,90 80,100" style="fill:none;stroke:black;stroke-width:1" />
+                    <polyline points="65,28 73,33 68,41" style="fill:none;stroke:black;stroke-width:1" /> <text x="5" y="105">أ</text>
+                    <text x="185" y="105">جـ</text>
+                    <text x="65" y="15">ب</text>
+                    <text x="68" y="115">د</text>
+                    
+                    <text x="30" y="60">٣ سم</text>
+                    <text x="110" y="60">؟ سم</text>
+                    <text x="80" y="115">٥ سم</text> </svg>
+            </div>
+
+            <div class="math-row">
+                <span class="bold-title">* الحل *</span><br>
+                ∵ أ ب جـ مثلث قائم في ب<br>
+                ، ب د ⊥ أ جـ<br>
+                ∴ | ب جـ |<sup>٢</sup> = | أ جـ |<sup>٢</sup> - | أ ب |<sup>٢</sup> ( مبرهنة ٢ )<br>
+                | ب جـ |<sup>٢</sup> = (٥)<sup>٢</sup> - (٣)<sup>٢</sup> = ٢٥ - ٩ = ١٦<br>
+                ∴ | ب جـ | = √١٦ = ٤ سم<br>
+                ∴ | أ ب | × | ب جـ | = | أ جـ | × | ب د | ( نتيجة )<br>
+                ٣ × ٤ = ٥ × | ب د | #<br>
+                | ب د | = <div class="fraction"><span class="top">١٢</span><span class="bottom">٥</span></div> = ٢,٤ سم<br>
+                ∵ | أ ب |<sup>٢</sup> = | أ جـ | × | أ د | ( مبرهنة فيثاغورث )<br>
+                ٩ = ٥ × | أ د | ومنها | أ د | = <div class="fraction"><span class="top">٩</span><span class="bottom">٥</span></div> = ١,٨ سم<br>
+                | جـ د | = | أ جـ | - | أ د | = ٥ - ١,٨ = ٣,٢ سم<br>
+                أو | ب جـ |<sup>٢</sup> = | أ جـ | × | جـ د | ⇒ ١٦ = ٥ | جـ د | ⇒ | جـ د | = ٣,٢ سم
+            </div>
+
+            <div class="dashed-line">******************************</div>
+
+            <div class="math-row">
+                <strong>| ٢ |</strong> أثبت أن الأعداد : ١ ، ٢ ، √٥ تمثل أطوال أضلاع مثلث قائم الزاوية .
+            </div>
+            <div class="math-row">
+                <span class="bold-title">* الحل *</span><br>
+                (١)<sup>٢</sup> = ١ ، (٢)<sup>٢</sup> = ٤ ، (√٥)<sup>٢</sup> = ٥<br>
+                ∵ (١)<sup>٢</sup> + (٢)<sup>٢</sup> = (√٥)<sup>٢</sup><br>
+                ١ + ٤ = ٥<br>
+                ∴ ١ ، ٢ ، √٥ تمثل أضلاع مثلث قائم الزاوية .
+            </div>
+        </div>
+
+        <div class="column left-column">
+            
+            <div class="math-row">
+                <strong>| ٣ |</strong> س ص ع مثلث قائم الزاوية في ص فيه :<br>
+                | س ص | = ٢√٧ سم ، | س ع | = ١٤ سم .<br>
+                أوجد كلاً من : جا ع ، جتا ع ، ظا ع
+            </div>
+            
+            <div class="svg-container">
+                <svg width="150" height="150" viewBox="0 0 150 150">
+                    <polygon points="30,20 30,120 120,120" style="fill:none;stroke:black;stroke-width:1.5" />
+                    <polyline points="30,110 40,110 40,120" style="fill:none;stroke:black;stroke-width:1" />
+                    
+                    <text x="25" y="15">س</text>
+                    <text x="20" y="135">ص</text>
+                    <text x="125" y="135">ع</text>
+                    
+                    <text x="70" y="70">١٤ سم</text>
+                    <text x="-10" y="70" style="font-size: 12px;">٢√٧</text>
+                </svg>
+            </div>
+
+            <div class="math-row">
+                <span class="bold-title">* الحل *</span><br>
+                | ص ع |<sup>٢</sup> = | س ع |<sup>٢</sup> - | س ص |<sup>٢</sup><br>
+                | ص ع |<sup>٢</sup> = (١٤)<sup>٢</sup> - (٢√٧)<sup>٢</sup> = ١٩٦ - ٢٨ = ١٦٨ سم<sup>٢</sup><br>
+                | ص ع | = √١٦٨ = √ ٤ × ٤٢ = ٢√٤٢ سم<br>
+                ∴ جا ع = <div class="fraction"><span class="top">٢√٧</span><span class="bottom">١٤</span></div> = <div class="fraction"><span class="top">√٧</span><span class="bottom">٧</span></div><br>
+                ، جتا ع = <div class="fraction"><span class="top">٢√٤٢</span><span class="bottom">١٤</span></div> = <div class="fraction"><span class="top">√٤٢</span><span class="bottom">٧</span></div><br>
+                ، ظا ع = <div class="fraction"><span class="top">٢√٧</span><span class="bottom">٢√٤٢</span></div> = <div class="fraction"><span class="top">√٧</span><span class="bottom">√٤٢</span></div> × <div class="fraction"><span class="top">√٧</span><span class="bottom">√٧</span></div> = <div class="fraction"><span class="top">٧</span><span class="bottom">٧√٦</span></div> = <div class="fraction"><span class="top">١</span><span class="bottom">√٦</span></div>
+            </div>
+
+            <div class="dashed-line">******************************</div>
+
+            <div class="math-row">
+                <strong>| ٤ |</strong> إذا كان ظا هـ = <div class="fraction"><span class="top">√٧</span><span class="bottom">٣</span></div> ، حيث هـ زاوية حادة<br>
+                فأوجد كلاً من : جا هـ ، جتا هـ
+            </div>
+
+            <div class="svg-container">
+                <svg width="150" height="120" viewBox="0 0 150 120">
+                    <polygon points="40,20 40,100 120,100" style="fill:none;stroke:black;stroke-width:1.5" />
+                    <text x="15" y="60">مقابل</text>
+                    <text x="30" y="65">√٧</text>
+                    <text x="70" y="115">٣ مجاور</text>
+                    <text x="80" y="50">وتر</text>
+                    <text x="125" y="105">هـ</text>
+                    <polyline points="40,90 50,90 50,100" style="fill:none;stroke:black;stroke-width:1" />
+                </svg>
+            </div>
+
+            <div class="math-row">
+                <span class="bold-title">* الحل *</span><br>
+                ∵ ظا هـ = <div class="fraction"><span class="top">المقابل</span><span class="bottom">المجاور</span></div> = <div class="fraction"><span class="top">√٧</span><span class="bottom">٣</span></div><br>
+                ∴ مربع الوتر = ٧ + ٩ = ١٦<br>
+                ∴ طول الوتر = ٤ سم<br>
+                ∴ جا هـ = <div class="fraction"><span class="top">√٧</span><span class="bottom">٤</span></div> ، جتا هـ = <div class="fraction"><span class="top">٣</span><span class="bottom">٤</span></div>
+            </div>
+
+            <div class="dashed-line">******************************</div>
+
+            <div class="math-row">
+                <strong>| ٥ |</strong> أ ) أحسب قيمة : <div class="fraction"><span class="top">ظا<sup>٢</sup> ٦٠ ْ - ٢ جتا ٦٠ ْ</span><span class="bottom">١ + ظا ٤٥ ْ</span></div>
+            </div>
+            <div class="math-row">
+                <span class="bold-title">* الحل *</span><br>
+                = <div class="fraction"><span class="top">(√٣)<sup>٢</sup> - ٢ × <div class="fraction"><span class="top">١</span><span class="bottom">٢</span></div></span><span class="bottom">١ + ١</span></div> = <div class="fraction"><span class="top">٣ - ١</span><span class="bottom">٢</span></div> = <div class="fraction"><span class="top">٢</span><span class="bottom">٢</span></div> = ١
+            </div>
+
+            <div class="math-row">
+                ب) أثبت أن ( جا ٣٠ ْ + جتا ٣٠ ْ )<sup>٢</sup> = ١ + جا ٦٠ ْ
+            </div>
+            <div class="math-row">
+                <span class="bold-title">* الحل *</span><br>
+                ب ) الطرف الأيمن = ( <div class="fraction"><span class="top">١</span><span class="bottom">٢</span></div> + <div class="fraction"><span class="top">√٣</span><span class="bottom">٢</span></div> )<sup>٢</sup> مربع كامل يتم فكه<br>
+                = <div class="fraction"><span class="top">١</span><span class="bottom">٤</span></div> + ٢ × <div class="fraction"><span class="top">١</span><span class="bottom">٢</span></div> × <div class="fraction"><span class="top">√٣</span><span class="bottom">٢</span></div> + <div class="fraction"><span class="top">٣</span><span class="bottom">٤</span></div><br>
+                = <div class="fraction"><span class="top">١</span><span class="bottom">٤</span></div> + <div class="fraction"><span class="top">٣</span><span class="bottom">٤</span></div> + <div class="fraction"><span class="top">√٣</span><span class="bottom">٢</span></div> = ١ + <div class="fraction"><span class="top">√٣</span><span class="bottom">٢</span></div> &nbsp; (نجمع الحدود المتشابهة مع أخذ مشترك من البسط)<br>
+                = <div class="fraction"><span class="top">٣√ + ٢ + ٢</span><span class="bottom">٤</span></div> = <div class="fraction"><span class="top">٣√ + ٤</span><span class="bottom">٤</span></div> (ملاحظة: هنا تفصيل الحل كما في الصورة)<br>
+                ← ( ١ )<br>
+                الطرف الأيسر = ١ + جا ٦٠ ْ<br>
+                = ١ + <div class="fraction"><span class="top">√٣</span><span class="bottom">٢</span></div> = <div class="fraction"><span class="top">٢ + √٣</span><span class="bottom">٢</span></div> ← ( ٢ )<br>
+                ∴ من (١) ، (٢) نجد أن :<br>
+                ( جا ٣٠ ْ + جتا ٣٠ ْ )<sup>٢</sup> = ١ + جا ٦٠ ْ #
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-text">
+        تم بحمد الله الجزء الأول يليه الجزء الثاني
+    </div>
+</div>
+
+</body>
+</html>
